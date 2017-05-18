@@ -8,13 +8,15 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {MaterialModule} from '@angular/material';
 
 //PrimeFace
-import { ButtonModule } from 'primeng/primeng';
+import { ButtonModule,PanelModule } from 'primeng/primeng';
 import { AppComponent } from './app.component';
+import { LoginComponent } from './login/login.component';
 
 
 @NgModule({
   declarations: [
     AppComponent,
+    LoginComponent,
   ],
   imports: [
     BrowserModule,
@@ -24,7 +26,7 @@ import { AppComponent } from './app.component';
     //Angular Material
     MaterialModule,
     //PrimeFace
-    ButtonModule
+    ButtonModule,PanelModule
   ],
   providers: [],
   bootstrap: [AppComponent]
