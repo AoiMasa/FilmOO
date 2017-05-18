@@ -1,0 +1,19 @@
+
+<form>
+
+  <p>
+    <md-input-container>
+      <input mdInput placeholder="Username" [(value)]="userName">
+    </md-input-container>
+  </p>
+
+  <p>
+    <md-input-container >
+      <input mdInput placeholder="Password" type="password" [(value)]="password">
+    </md-input-container>
+  </p>
+  <p>
+    <button md-raised-button (click)="login()">Login</button>
+  </p>
+
+</form>
