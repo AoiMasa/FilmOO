@@ -57,7 +57,7 @@ class HttpServer {
 
         //Default route
         this.expressApp.get('/', function(req, res) {
-            fs.createReadStream(this.staticRoot + 'index.html').pipe(res); aSDasd
+            fs.createReadStream(this.staticRoot + 'index.html').pipe(res);
         });
 
     }

@@ -20,5 +20,4 @@ export class LoginComponent implements OnInit {
     alert(this.userName);
   }
 
-
 }

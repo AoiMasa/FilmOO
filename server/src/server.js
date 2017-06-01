@@ -39,7 +39,6 @@ var HttpServer = (function () {
         //Default route
         this.expressApp.get('/', function (req, res) {
             fs.createReadStream(this.staticRoot + 'index.html').pipe(res);
-            aSDasd;
         });
     };
     return HttpServer;
