@@ -1,21 +1,19 @@
 // "use strict";
 
+import mongoose = require("mongoose");
+
 import * as express from 'express';
 import * as bodyParser from 'body-parser';
 import * as fs from 'fs';
 
-import mongoose = require("mongoose");
-
+import { UserRoute } from "./routes/userRoute";
 
 
 class HttpServer {
 
     private readonly PORT : string = "port";
-    private readonly MONGODB_CONNECTION : string = "mongodb://localhost:27017/mean2Db";
 
     private expressApp : express.Application;
-    private expressRouterApi : express.Router;
-
 
     private staticRoot : string = __dirname + '/';
 
@@ -59,6 +57,11 @@ class HttpServer {
         this.expressApp.get('/', function(req, res) {
             fs.createReadStream(this.staticRoot + 'index.html').pipe(res);
         });
+
+        let userRoute = new UserRoute();
+        this.expressApp.use(userRoute.getRouter());
+
+
 
     }
 

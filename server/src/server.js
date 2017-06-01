@@ -4,11 +4,11 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var express = require("express");
 var bodyParser = require("body-parser");
 var fs = require("fs");
+var userRoute_1 = require("./routes/userRoute");
 var HttpServer = (function () {
     function HttpServer() {
         var _this = this;
         this.PORT = "port";
-        this.MONGODB_CONNECTION = "mongodb://localhost:27017/mean2Db";
         this.staticRoot = __dirname + '/';
         this.onStartListening = function () {
             console.log('Server running on port ', _this.getPort(), ' - OK');
@@ -40,6 +40,8 @@ var HttpServer = (function () {
         this.expressApp.get('/', function (req, res) {
             fs.createReadStream(this.staticRoot + 'index.html').pipe(res);
         });
+        var userRoute = new userRoute_1.UserRoute();
+        this.expressApp.use(userRoute.getRouter());
     };
     return HttpServer;
 }());
