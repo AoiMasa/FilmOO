@@ -1,0 +1,25 @@
+
+<h3>Welcome {{username}} !</h3>
+<p>
+ <a routerLink="/login" routerLinkActive="active">Logout...</a>
+</p>
+
+
+<p>
+<button md-raised-button (click)="addMovies()">Add movies</button>
+</p>
+
+<table style="width:100%">
+    <tr>
+      <th>Movie</th>
+      <th>Rating</th>
+    </tr>
+    <tr>
+      <td>The Guardians of the Galaxy</td>
+      <td>5</td>
+    </tr>
+    <tr>
+      <td>Split</td>
+      <td>2</td>
+    </tr>
+</table>

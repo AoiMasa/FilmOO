@@ -1,0 +1,32 @@
+<form>
+<h4>Please enter your informations:</h4>
+
+
+  <p>
+  <md-input-container>
+    <input mdInput placeholder="Username" [(value)]="username">
+  </md-input-container>
+  </p>
+  <p>
+  <md-input-container>
+    <input mdInput placeholder="Password" type="password" [(value)]="password">
+  </md-input-container>
+  </p>
+
+
+  <p>
+    <md-input-container>
+      <input mdInput placeholder="Firstname" [(value)]="firstname">
+    </md-input-container>
+  </p>
+  <p>
+    <md-input-container>
+      <input mdInput placeholder="Lastname" [(value)]="lastname">
+    </md-input-container>
+  </p>
+
+<p>
+  <button md-raised-button (click)="cancel()">Cancel</button>
+  <button md-raised-button (click)="createProfile()">Confirm</button>
+</p>
+  </form>

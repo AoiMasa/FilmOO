@@ -3,7 +3,7 @@
 
   <p>
     <md-input-container>
-      <input mdInput placeholder="Username" [(value)]="userName">
+      <input mdInput placeholder="Username" [(value)]="username">
     </md-input-container>
   </p>
 
@@ -13,6 +13,7 @@
     </md-input-container>
   </p>
   <p>
+    <button md-raised-button (click)="register()">Register</button>
     <button md-raised-button (click)="login()">Login</button>
   </p>
 

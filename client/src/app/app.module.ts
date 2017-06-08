@@ -11,12 +11,21 @@ import {MaterialModule} from '@angular/material';
 import { ButtonModule,PanelModule } from 'primeng/primeng';
 import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
+import { RegisterComponent } from './register/register.component';
+import { MovieAddComponent } from './movie-add/movie-add.component';
+import { MovieSearchComponent } from './movie-search/movie-search.component';
+import { UserProfileComponent } from './user-profile/user-profile.component';
+import {AppRoutingModule} from "./app-routing/app-routing.module";
 
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
+    RegisterComponent,
+    MovieAddComponent,
+    MovieSearchComponent,
+    UserProfileComponent,
   ],
   imports: [
     BrowserModule,
@@ -26,7 +35,8 @@ import { LoginComponent } from './login/login.component';
     //Angular Material
     MaterialModule,
     //PrimeFace
-    ButtonModule,PanelModule
+    ButtonModule,PanelModule,
+    AppRoutingModule
   ],
   providers: [],
   bootstrap: [AppComponent]
