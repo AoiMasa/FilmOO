@@ -4,29 +4,29 @@
 
   <p>
   <md-input-container>
-    <input mdInput placeholder="Username" [(value)]="username">
+    <input mdInput placeholder="Username" #username required="required">
   </md-input-container>
   </p>
   <p>
   <md-input-container>
-    <input mdInput placeholder="Password" type="password" [(value)]="password">
+    <input mdInput placeholder="Password" type="password" #password required="required">
   </md-input-container>
   </p>
 
 
   <p>
     <md-input-container>
-      <input mdInput placeholder="Firstname" [(value)]="firstname">
+      <input mdInput placeholder="Firstname" #firstname required="required">
     </md-input-container>
   </p>
   <p>
     <md-input-container>
-      <input mdInput placeholder="Lastname" [(value)]="lastname">
+      <input mdInput placeholder="Lastname" #lastname required="required">
     </md-input-container>
   </p>
 
 <p>
   <button md-raised-button (click)="cancel()">Cancel</button>
-  <button md-raised-button (click)="createProfile()">Confirm</button>
+  <button md-raised-button (click)="createProfile(username.value,password.value,firstname.value, lastname.value)">Confirm</button>
 </p>
   </form>

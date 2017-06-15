@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {Router} from "@angular/router";
+import {UserService} from "../user/user.service";
+import {Movie} from "../user/movie";
 
 @Component({
   selector: 'app-user-profile',
@@ -8,9 +10,16 @@ import {Router} from "@angular/router";
 })
 export class UserProfileComponent implements OnInit {
 
-  constructor(private router: Router) { }
+  username: string;
+  movies : Movie[]
+  constructor(private router: Router,private userService: UserService) { }
 
   ngOnInit() {
+    if (this.userService.currentUser != null) {
+      this.username = this.userService.currentUser.userName;
+      this.movies = this.userService.currentUser.movies;
+    }
+    else this.username = "Default";
   }
 
   private  addMovies(){

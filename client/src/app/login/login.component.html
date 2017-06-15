@@ -3,18 +3,18 @@
 
   <p>
     <md-input-container>
-      <input mdInput placeholder="Username" [(value)]="username">
+      <input mdInput placeholder="Username" #userName>
     </md-input-container>
   </p>
 
   <p>
     <md-input-container >
-      <input mdInput placeholder="Password" type="password" [(value)]="password">
+      <input mdInput placeholder="Password" type="password" #password>
     </md-input-container>
   </p>
   <p>
     <button md-raised-button (click)="register()">Register</button>
-    <button md-raised-button (click)="login()">Login</button>
+    <button md-raised-button (click)="login(userName.value, password.value)">Login</button>
   </p>
 
 </form>

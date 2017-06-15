@@ -2,3 +2,7 @@
 p{
   text-align: right;
 }
+table{
+  table-layout:fixed;
+  width:100%;
+}
