@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {Router} from "@angular/router";
+import {UserService} from "../user/user.service";
+import {first} from "rxjs/operator/first";
 
 @Component({
   selector: 'app-register',
@@ -8,22 +10,44 @@ import {Router} from "@angular/router";
 })
 export class RegisterComponent implements OnInit {
 
-  public username : string;
-  public password : string;
-  public firstname : string;
-  public lastname : string;
 
-  constructor(private router: Router) { }
+  constructor(private router: Router,private userService: UserService) { }
 
   ngOnInit() {
+  }
+
+  private isTextNullOrEmpty(text: string): boolean
+  {
+    return text == null || text.trim() == '';
   }
 
   private  cancel(){
     this.router.navigate(['/login']);
   }
 
-  private  createProfile(){
-    this.router.navigate(['/user-profile']);
+  private  createProfile(username: string, password: string, firstname: string, lastname: string){
+    if (!this.isTextNullOrEmpty(username) &&
+      !this.isTextNullOrEmpty(password) &&
+      !this.isTextNullOrEmpty(firstname) &&
+      !this.isTextNullOrEmpty(lastname)) {
+
+      if(this.userService.create(username,password,firstname, lastname)) this.router.navigate(['/user-profile']);
+      else alert("Username already exists.")
+      }
+      else if (this.isTextNullOrEmpty(username)) {
+      alert("Username must not be empty !");
+    }
+    else if (this.isTextNullOrEmpty(password)) {
+      alert("Password must not be empty !");
+    }
+    else if (this.isTextNullOrEmpty(firstname)) {
+      alert("Firstname must not be empty !");
+    }
+    else if (this.isTextNullOrEmpty(lastname)) {
+      alert("Lastname must not be empty !");
+    }
+
+
   }
 
 }

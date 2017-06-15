@@ -9,17 +9,13 @@
 <button md-raised-button (click)="addMovies()">Add movies</button>
 </p>
 
-<table style="width:100%">
+<table>
     <tr>
-      <th>Movie</th>
-      <th>Rating</th>
+      <td>Movie</td>
+      <td>Rating</td>
     </tr>
-    <tr>
-      <td>The Guardians of the Galaxy</td>
-      <td>5</td>
-    </tr>
-    <tr>
-      <td>Split</td>
-      <td>2</td>
-    </tr>
+    <tr *ngFor="let movie of movies">
+      <td>{{movie.name}}</td>
+      <td>{{movie.rating}} / 5</td>
+   </tr>
 </table>

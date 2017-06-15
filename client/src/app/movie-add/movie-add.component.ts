@@ -13,6 +13,7 @@ export class MovieAddComponent implements OnInit {
   }
 
   private  addMovie(){
+
     alert("Film was added to your collection");
   }
 

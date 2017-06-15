@@ -6,6 +6,7 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 
 //Angular Material
 import {MaterialModule} from '@angular/material';
+import {UserService} from "./user/user.service";
 
 //PrimeFace
 import { ButtonModule,PanelModule } from 'primeng/primeng';
@@ -38,7 +39,7 @@ import {AppRoutingModule} from "./app-routing/app-routing.module";
     ButtonModule,PanelModule,
     AppRoutingModule
   ],
-  providers: [],
+  providers: [UserService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
