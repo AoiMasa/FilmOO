@@ -1,29 +1,41 @@
-import { NextFunction, Request, Response, Router } from "express";
+import { NextFunction, Request, Response } from "express";
 import * as express from 'express';
 
-import {User, IUserModel} from '../schemas/user';
-import {IUser} from '../interfaces/user';
-import {userInfo} from "os";
+import {BaseRoute} from "./baseRoute";
 
-export class UserRoute{
+export class UserRoute extends BaseRoute{
 
     public getRouter() : express.Router{
         let router = express.Router();
 
         router.get("/users",this.getUsers);
-        router.post("/user",this.createUser);
+        router.post("/newuser",this.createUser);
+        router.get("/authentificate/:username/:password",this.authentificate);
 
         return router;
     }
 
     private getUsers = (req: Request, res: Response, next: NextFunction) => {
-
-
+        this.db.user.find().exec().then(x => {
+            res.json(x);
+            next();
+        })
     }
 
     private createUser = (req: Request, res: Response, next: NextFunction) => {
 
+        req.body.username
     }
+
+    private authentificate = (req: Request, res: Response, next: NextFunction) => {
+        this.db.user.findOne({userName : req.params.username, password : req.params.password}).exec().then(x => {
+            res.json(x);
+            next();
+        })
+    }
+
+
+
 
     /**
      * Get a user

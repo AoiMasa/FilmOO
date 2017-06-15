@@ -4,7 +4,7 @@ import { UserSchema,IUserModel } from "../schemas/user";
 
 import mongoose = require("mongoose");
 import * as assert from "assert";
-import {isNull, isUndefined} from "util";
+import {isNull} from "util";
 
 @suite
 class UserTest {

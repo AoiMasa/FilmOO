@@ -2,19 +2,23 @@
   "name": "Film00-Common",
   "version": "0.0.0",
   "license": "MIT",
-  "scripts": {},
-  "private": true,
-  "dependencies": {},
+  "scripts": {
+      "start": "node dist/server.js"
+  },
+    "private": true,
+  "dependencies": {
+      "body-parser": "^1.17.1",
+      "core-js": "^2.4.1",
+      "express": "^4.15.2",
+      "mongoose": "^4.9.5",
+      "q": "^1.5.0",
+      "rxjs": "^5.1.0",
+      "zone.js": "^0.8.4"
+  },
   "devDependencies": {
     "gulp": "*",
     "gulp-nodemon": "^2.2.1",
     "gulp-typescript": "*",
-    "typescript": "*",
-    "body-parser": "^1.17.1",
-    "core-js": "^2.4.1",
-    "express": "^4.15.2",
-    "mongoose": "^4.9.5",
-    "rxjs": "^5.1.0",
-    "zone.js": "^0.8.4"
+    "typescript": "*"
   }
 }

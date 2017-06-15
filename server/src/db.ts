@@ -1,45 +1,37 @@
-import * as mongoose from 'mongoose';
+//import * as mongoose from 'mongoose';
+import mongoose = require("mongoose");
+import { UserSchema,IUserModel } from "./schemas/user";
 
-//interfaces
-import { IUser } from "./interfaces/user"; //import IUser
-
-//schemas
-import { IUserModel,UserSchema } from "./schemas/user"; //import userSchema
+//import mongoose = require("mongoose");
 
 /**
  * Created by Argon on 01.06.17.
  */
 
-class DB{
+export class DB{
 
     private readonly MONGODB_CONNECTION : string = "mongodb://localhost:27017/Film00";
 
-    private model: IModel; //an instance of IModel
+    private connection : mongoose.Connection;
+    public user: mongoose.Model<IUserModel>;
 
     public constructor() {
-        //instance defaults
-        this.model = Object(); //initialize this to an empty object
-
-        //code omitted
+        this.config();
     }
 
     public config() {
+        //use q promises
+        global.Promise = require("q").Promise;
 
-            //code omitted
+        //use q library for mongoose promise
+        mongoose.Promise = global.Promise;
 
-            //use q promises
-            global.Promise = require("q").Promise;
-            mongoose.Promise = global.Promise;
+        //connect to mongoose and create model
+        this.connection = mongoose.createConnection(this.MONGODB_CONNECTION);
+        this.user = this.connection.model<IUserModel>("User", UserSchema);
 
-            //connect to mongoose
-            let connection: mongoose.Connection = mongoose.createConnection(MONGODB_CONNECTION);
-
-            //create models
-            this.model.user = connection.model<IUserModel>("User", userSchema);
-
-            //code omitted
-        }
     }
-
-
 }
+
+
+

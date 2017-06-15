@@ -7,15 +7,15 @@ import * as bodyParser from 'body-parser';
 import * as fs from 'fs';
 
 import { UserRoute } from "./routes/userRoute";
-
+import { DB } from "./db";
 
 class HttpServer {
 
     private readonly PORT : string = "port";
-
     private expressApp : express.Application;
-
     private staticRoot : string = __dirname + '/';
+
+    private db : DB = new DB();
 
     constructor() {
         this.expressApp = express();
@@ -58,9 +58,8 @@ class HttpServer {
             fs.createReadStream(this.staticRoot + 'index.html').pipe(res);
         });
 
-        let userRoute = new UserRoute();
+        let userRoute = new UserRoute(this.db);
         this.expressApp.use(userRoute.getRouter());
-
 
 
     }

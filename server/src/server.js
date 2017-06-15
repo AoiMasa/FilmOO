@@ -5,11 +5,13 @@ var express = require("express");
 var bodyParser = require("body-parser");
 var fs = require("fs");
 var userRoute_1 = require("./routes/userRoute");
+var db_1 = require("./db");
 var HttpServer = (function () {
     function HttpServer() {
         var _this = this;
         this.PORT = "port";
         this.staticRoot = __dirname + '/';
+        this.db = new db_1.DB();
         this.onStartListening = function () {
             console.log('Server running on port ', _this.getPort(), ' - OK');
         };
@@ -40,7 +42,7 @@ var HttpServer = (function () {
         this.expressApp.get('/', function (req, res) {
             fs.createReadStream(this.staticRoot + 'index.html').pipe(res);
         });
-        var userRoute = new userRoute_1.UserRoute();
+        var userRoute = new userRoute_1.UserRoute(this.db);
         this.expressApp.use(userRoute.getRouter());
     };
     return HttpServer;
