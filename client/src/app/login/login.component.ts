@@ -20,10 +20,19 @@ export class LoginComponent implements OnInit {
   }
 
   private  login(username: string, password:string){
-    let isSuccessed : boolean = this.userService.authenticate(username, password);
+    //let isSuccessed : boolean =
 
-    if (isSuccessed)    this.router.navigate(['/user-profile']);
-    else alert("Unknown username and/or password !");
+      this.userService.connect(username, password).then(isSuccessed => {
+      if(isSuccessed) {
+        this.router.navigate(['/user-profile']);
+      }else{
+        alert("Unknown username and/or password !");
+      }
+    });
+
+    //
+    // if (isSuccessed)    this.router.navigate(['/user-profile']);
+    // else alert("Unknown username and/or password !");
   }
 
   private  register(){

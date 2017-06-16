@@ -5,7 +5,9 @@ import {Movie} from "./movie";
  */
 export class User implements IUser
 {
-  public movies: Movie[]
+
+    public movies: Movie[];
+
   constructor (public userName: string, public password: string, public firstName: string, public lastName: string) {
 
   }
