@@ -24,7 +24,7 @@ export class UserRoute extends BaseRoute{
 
     private createUser = (req: Request, res: Response, next: NextFunction) => {
 
-        req.body.username
+
     }
 
     private authentificate = (req: Request, res: Response, next: NextFunction) => {
