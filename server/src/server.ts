@@ -1,7 +1,6 @@
 // "use strict";
 
 import mongoose = require("mongoose");
-
 import * as express from 'express';
 import * as bodyParser from 'body-parser';
 import * as fs from 'fs';
@@ -55,7 +54,7 @@ class HttpServer {
 
         //Default route
         this.expressApp.get('/', function(req, res) {
-            fs.createReadStream(this.staticRoot + 'index.html').pipe(res);
+            fs.createReadStream(__dirname + '/' + 'index.html').pipe(res);
         });
 
         let userRoute = new UserRoute(this.db);

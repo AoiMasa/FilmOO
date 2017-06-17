@@ -1,7 +1,10 @@
 import { NextFunction, Request, Response } from "express";
 import * as express from 'express';
 
+
 import {BaseRoute} from "./baseRoute";
+import {User} from '../schemas/user';
+import {IUser} from '../interfaces/user';
 
 export class UserRoute extends BaseRoute{
 
@@ -22,9 +25,21 @@ export class UserRoute extends BaseRoute{
         })
     }
 
-    private createUser = (req: Request, res: Response, next: NextFunction) => {
+    private createUser = (req: Request, res: Response) => {
 
+        let newUser: IUser = {};
 
+        console.log(req.body.userName);
+        console.log(req.body.password);
+        console.log(req.body.firstName);
+        console.log(req.body.lastName);
+
+        newUser.userName = req.body.userName;
+        newUser.password = req.body.password;
+        newUser.firstName = req.body.firstName;
+        newUser.lastName = req.body.lastName;
+
+        (new this.db.user(newUser)).save().then(() => res.send('OK'));
     }
 
     private authentificate = (req: Request, res: Response, next: NextFunction) => {
@@ -33,8 +48,6 @@ export class UserRoute extends BaseRoute{
             next();
         })
     }
-
-
 
 
     /**

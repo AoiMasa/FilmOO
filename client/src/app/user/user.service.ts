@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {Headers, Http, Response} from '@angular/http';
+import {Headers, Http, RequestOptions, Response} from '@angular/http';
 
 import 'rxjs/add/operator/toPromise';
 
@@ -39,20 +39,27 @@ export class UserService {
         }
         return isAdded;
     }
+    //
+    // create(userName: string, password: string, firstName: string, lastName: string): boolean {
+    //     let isCreated = false;
+    //     const newUser: User = new User(userName, password, firstName, lastName);
+    //     const existingUser: User = USERS.find(user => user.userName == userName);
+    //     if (newUser != null && existingUser == null) //If existingUser is null: there is no occurence of input username in db
+    //     {
+    //         USERS.push(newUser);
+    //         this.currentUser = newUser;
+    //         isCreated = true;
+    //     }
+    //     return isCreated;
+    // }
 
-    create(userName: string, password: string, firstName: string, lastName: string): boolean {
-        let isCreated = false;
-        const newUser: User = new User(userName, password, firstName, lastName);
-        const existingUser: User = USERS.find(user => user.userName == userName);
-        if (newUser != null && existingUser == null) //If existingUser is null: there is no occurence of input username in db
-        {
-            USERS.push(newUser);
-            this.currentUser = newUser;
-            isCreated = true;
-        }
-        return isCreated;
+    public create(userName: string, password: string, firstName: string, lastName: string): Promise<Response> {
+        const headers = new Headers({ 'Content-Type': 'application/json' });
+        const options = new RequestOptions({ headers: headers });
+        const url = `http://localhost:3000/newuser/`;
+
+        return this.http.post(url, {'userName' : userName, 'password' : password, 'firstName' : firstName, 'lastName' : lastName}, options).toPromise();
     }
-
 
     public connect(userName: string, password: string): Promise<boolean> {
         const url = `http://localhost:3000/authentificate/${userName}/${password}`;
