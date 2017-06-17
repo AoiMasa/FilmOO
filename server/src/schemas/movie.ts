@@ -22,4 +22,4 @@ MovieSchema.pre("save", next => {
 });
 
 
-export const Movie: Model<IMovieModel> = model<IMovieModel>("User", MovieSchema);
+export const Movie: Model<IMovieModel> = model<IMovieModel>("Movie", MovieSchema);

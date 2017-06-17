@@ -40,7 +40,7 @@ var HttpServer = (function () {
     HttpServer.prototype.routes = function () {
         //Default route
         this.expressApp.get('/', function (req, res) {
-            fs.createReadStream(this.staticRoot + 'index.html').pipe(res);
+            fs.createReadStream(__dirname + '/' + 'index.html').pipe(res);
         });
         var userRoute = new userRoute_1.UserRoute(this.db);
         this.expressApp.use(userRoute.getRouter());
