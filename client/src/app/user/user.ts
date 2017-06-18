@@ -1,5 +1,5 @@
 import {IUser} from "../../../../server/src/interfaces/user";
-import {Movie} from "./movie";
+import {Movie} from "../movie/movie";
 /**
  * Created by Aoi on 15/06/2017.
  */
