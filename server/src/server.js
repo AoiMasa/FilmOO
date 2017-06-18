@@ -47,7 +47,8 @@ var HttpServer = (function () {
     };
     return HttpServer;
 }());
+exports.HttpServer = HttpServer;
 //Create and start the server
-var server = new HttpServer();
-server.start();
+exports.server = new HttpServer();
+exports.server.start();
 //# sourceMappingURL=server.js.map

@@ -1,4 +1,8 @@
 import mongoose = require('mongoose');
+import * as chai from 'chai';
+import chaiHttp  = require('chai-http');
+
+let config = require('config');
 
 /**
  * Base class for test model
@@ -7,7 +11,7 @@ import mongoose = require('mongoose');
 export class baseModelTest {
 
     // connect to mongoose and create model
-    protected static readonly MONGODB_CONNECTION : string = 'mongodb://localhost:27017/Film00-Test';
+    protected static readonly MONGODB_CONNECTION : string = config.DBHost; //'mongodb://localhost:27017/Film00-Test';
 
     // DataBase Access
     protected static connection: mongoose.Connection;
@@ -23,8 +27,11 @@ export class baseModelTest {
         baseModelTest.connection = mongoose.createConnection(this.MONGODB_CONNECTION);
 
         // require chai and use should() assertions
-        const chai = require('chai');
+        //const chai = require('chai'); = import * as chai from 'chai';
+        //const chaiHttp = require('chai-http');
         chai.should();
+        chai.use(chaiHttp);
     }
 
 }
+

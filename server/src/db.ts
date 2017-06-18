@@ -1,19 +1,19 @@
 //import * as mongoose from 'mongoose';
 import mongoose = require("mongoose");
 import { UserSchema,IUserModel } from "./schemas/user";
+import {IMovieModel, MovieSchema} from './schemas/movie';
 
-//import mongoose = require("mongoose");
-
+let config = require('config');
 /**
  * Created by Argon on 01.06.17.
  */
-
 export class DB{
 
-    private readonly MONGODB_CONNECTION : string = "mongodb://localhost:27017/Film00";
+    private readonly MONGODB_CONNECTION : string = config.DBHost;//"mongodb://localhost:27017/Film00";
 
     private connection : mongoose.Connection;
     public user: mongoose.Model<IUserModel>;
+    public movie: mongoose.Model<IMovieModel>;
 
     public constructor() {
         this.config();
@@ -29,6 +29,7 @@ export class DB{
         //connect to mongoose and create model
         this.connection = mongoose.createConnection(this.MONGODB_CONNECTION);
         this.user = this.connection.model<IUserModel>("User", UserSchema);
+        this.movie = this.connection.model<IMovieModel>("Movie", MovieSchema);
 
     }
 }

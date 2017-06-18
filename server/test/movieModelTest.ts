@@ -1,6 +1,6 @@
 import { suite, test } from 'mocha-typescript';
-import { MovieSchema, IMovieModel } from '../schemas/movie';
-import { IMovie } from '../interfaces/movie';
+import { MovieSchema, IMovieModel } from '../src/schemas/movie';
+import { IMovie } from '../src/interfaces/movie';
 import { baseModelTest }  from './baseModelTest';
 
 import mongoose = require('mongoose');

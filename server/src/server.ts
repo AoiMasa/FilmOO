@@ -8,10 +8,10 @@ import * as fs from 'fs';
 import { UserRoute } from "./routes/userRoute";
 import { DB } from "./db";
 
-class HttpServer {
+export class HttpServer {
 
     private readonly PORT : string = "port";
-    private expressApp : express.Application;
+    public expressApp : express.Application; //Public to be accessed by test
     private staticRoot : string = __dirname + '/';
 
     private db : DB = new DB();
@@ -70,7 +70,7 @@ class HttpServer {
 }
 
 //Create and start the server
-let server : HttpServer = new HttpServer();
+export let server : HttpServer = new HttpServer();
 server.start();
 
 
