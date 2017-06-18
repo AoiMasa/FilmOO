@@ -4,15 +4,15 @@ import {Headers, Http, RequestOptions, Response} from '@angular/http';
 import 'rxjs/add/operator/toPromise';
 
 import {User} from './user';
-import {Movie} from './movie';
+import {Movie} from '../movie/movie';
 import {IUser} from '../../../../server/src/interfaces/user';
 import {isNullOrUndefined} from 'util';
 
 //Test data
 const MOVIES: Movie[] = [
-    {id: 1, name: 'Her', rating: 4},
-    {id: 2, name: 'Guardians of the galaxy', rating: 5},
-    {id: 3, name: 'Split', rating: 2}
+    {id: 1, name: 'Her', rating: 4, actors: []},
+    {id: 2, name: 'Guardians of the galaxy', rating: 5, actors: []},
+    {id: 3, name: 'Split', rating: 2, actors: []}
 ];
 
 const USERS: User[] = [
@@ -34,11 +34,12 @@ export class UserService {
         //Check if it's doesn't already exist on the user's collection
         if (movie != null && this.currentUser.movies.find(m => m.name == movie.name) == null) {
             //Add movie to user's collection
-            this.currentUser.movies.push(movie);
+            this.currentUser.movies.push(Object.create(movie));
             isAdded = true;
         }
         return isAdded;
     }
+
     //
     // create(userName: string, password: string, firstName: string, lastName: string): boolean {
     //     let isCreated = false;
@@ -54,11 +55,29 @@ export class UserService {
     // }
 
     public create(userName: string, password: string, firstName: string, lastName: string): Promise<Response> {
-        const headers = new Headers({ 'Content-Type': 'application/json' });
-        const options = new RequestOptions({ headers: headers });
+        const headers = new Headers({'Content-Type': 'application/json'});
+        const options = new RequestOptions({headers: headers});
         const url = `http://localhost:3000/newuser/`;
 
-        return this.http.post(url, {'userName' : userName, 'password' : password, 'firstName' : firstName, 'lastName' : lastName}, options).toPromise();
+        return this.http.post(url, {
+            'userName': userName,
+            'password': password,
+            'firstName': firstName,
+            'lastName': lastName
+        }, options).toPromise();
+    }
+
+    authenticate(userName: string, password: string): boolean {
+
+
+        this.currentUser = USERS.find(user => user.userName == userName && user.password == password);
+
+
+        return this.currentUser != null;
+    }
+
+    updateMovieRating(movie: Movie, newRating: number): void {
+        movie.rating = newRating;
     }
 
     public connect(userName: string, password: string): Promise<boolean> {

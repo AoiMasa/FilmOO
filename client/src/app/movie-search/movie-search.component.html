@@ -1,10 +1,54 @@
 <div id="search-component">
-  <input #searchBox id="search-box" (keyup)="search(searchBox.value)" />
-    <select>
-        <option value="all">All</option>
-        <option value="movie">Movie</option>
-        <option value="actor">Actor</option>
-    </select>
-</div>
+    <table>
 
+        <tr>
+            <td>
+                <input #searchBox id="search-box" (keyup)="search(searchBox.value)"/>
+                <div>
+                    <!-- async pipe subscribes to the Observable and produces array of heroes to *ngFor -->
+                    <div *ngFor="let movie of movies | async"
+                         (click)="addMovieToResult(movie)" class="search-result">
+                        {{movie.name}}
+                    </div>
+                </div>
+            </td>
+            <td>
+                <button md-raised-button (click)="addMoviesToResult(searchBox.value)">GO</button>
+            </td>
+            <td>
+                <p-dropdown [options]="filters" [(ngModel)]="selectedFilter"></p-dropdown>
+            </td>
+        </tr>
+    </table>
+</div>
+<div id="search-result">
+    <p-dataList [value]="result" [paginator]="true" [rows]="5">
+        <p-header>
+            List of Movie
+        </p-header>
+        <ng-template let-movie pTemplate="item">
+            <div class="ui-grid ui-grid-responsive ui-fluid"
+                 style="font-size:16px;padding:20px;border-bottom:1px solid #D5D5D5;">
+                <div class="ui-grid-row">
+
+                    <div class="ui-grid-col-5">
+                        <div class="ui-grid ui-grid-responsive ui-fluid">
+                            <div class="ui-grid-row">
+                                <div class="ui-grid-col-2">Name:</div>
+                                <div class="ui-grid-col-10"><strong>{{movie.name}}</strong></div>
+                            </div>
+                            <div class="ui-grid-row">
+                                <div class="ui-grid-col-2">Global rating:</div>
+                                <div class="ui-grid-col-10">{{movie.rating}}</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="ui-grid-col-1" style="text-align:left"><i class="fa fa-plus" (click)="addMovie(movie)"
+                                                                          style="cursor:pointer;float:left;margin-top:10px"></i>
+                    </div>
+                </div>
+            </div>
+        </ng-template>
+    </p-dataList>
+</div>
 
