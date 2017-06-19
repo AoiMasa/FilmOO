@@ -42,7 +42,7 @@ class UserModelTest extends baseModelTest{
     @test('From REST - Create new User')
     public async createRest() {
 
-        await chai.request(server.expressApp).post('/newuser').send(this.data).then();
+        await chai.request(server.expressApp).post('/users/newuser').send(this.data).then();
         const result = await UserModelTest.User.findOne({userName : 'brianLove'}).exec();
 
         result._id.should.exist;
@@ -55,7 +55,7 @@ class UserModelTest extends baseModelTest{
     @test('From REST - Authentificate')
     public async authentificateRest() {
 
-        const url = `/authentificate/${this.data.userName}/${this.data.password}`;
+        const url = `/users/authentificate/${this.data.userName}/${this.data.password}`;
         const result = await chai.request(server.expressApp).get(url).then();
 
         result.body._id.should.exist;
@@ -86,8 +86,6 @@ class UserModelTest extends baseModelTest{
     @test('Get created User')
     public async getUser(){
         const result = await UserModelTest.User.findOne({userName : 'brianLove'}).exec();
-
-        await chai.request(server.expressApp).post('/newuser').send(this.data).then();
 
         result.should.exist;
         result.userName.should.equal(this.data.userName);

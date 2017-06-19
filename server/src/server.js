@@ -6,6 +6,7 @@ var bodyParser = require("body-parser");
 var fs = require("fs");
 var userRoute_1 = require("./routes/userRoute");
 var db_1 = require("./db");
+var movieRoute_1 = require("./routes/movieRoute");
 var HttpServer = (function () {
     function HttpServer() {
         var _this = this;
@@ -43,7 +44,9 @@ var HttpServer = (function () {
             fs.createReadStream(__dirname + '/' + 'index.html').pipe(res);
         });
         var userRoute = new userRoute_1.UserRoute(this.db);
-        this.expressApp.use(userRoute.getRouter());
+        this.expressApp.use('/users', userRoute.getRouter());
+        var movieRoute = new movieRoute_1.MovieRoute(this.db);
+        this.expressApp.use('/movies', movieRoute.getRouter());
     };
     return HttpServer;
 }());

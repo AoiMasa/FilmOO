@@ -7,6 +7,7 @@ import * as fs from 'fs';
 
 import { UserRoute } from "./routes/userRoute";
 import { DB } from "./db";
+import {MovieRoute} from './routes/movieRoute';
 
 export class HttpServer {
 
@@ -58,8 +59,10 @@ export class HttpServer {
         });
 
         let userRoute = new UserRoute(this.db);
-        this.expressApp.use(userRoute.getRouter());
+        this.expressApp.use('/users',userRoute.getRouter());
 
+        let movieRoute = new MovieRoute(this.db);
+        this.expressApp.use('/movies',movieRoute.getRouter());
 
     }
 

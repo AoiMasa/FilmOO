@@ -11,7 +11,7 @@ export class MovieRoute extends BaseRoute{
         let router = express.Router();
 
         // router.get("/users",this.getUsers);
-        // router.post("/newuser",this.createUser);
+        router.post("/newmovie",this.createMovie);
         // router.get("/authentificate/:username/:password",this.authentificate);
 
         return router;
@@ -24,26 +24,18 @@ export class MovieRoute extends BaseRoute{
         })
     }
 
-    // private createUser = (req: Request, res: Response) => {
-    //
-    //     let newUser: IUser = {};
-    //
-    //     console.log(req.body.userName);
-    //     console.log(req.body.password);
-    //     console.log(req.body.firstName);
-    //     console.log(req.body.lastName);
-    //
-    //     newUser.userName = req.body.userName;
-    //     newUser.password = req.body.password;
-    //     newUser.firstName = req.body.firstName;
-    //     newUser.lastName = req.body.lastName;
-    //
-    //     (new this.db.user(newUser)).save().then(() => res.send('OK'));
-    // }
-    //
-    // private authentificate = (req: Request, res: Response, next: NextFunction) => {
-    //     this.db.user.findOne({userName : req.params.username, password : req.params.password}).exec().then(x => {
-    //         res.json(x);
-    //         next();
-    //     })
-    // }
+    private createMovie = (req: Request, res: Response) => {
+        let newMovie: IMovie = {};
+
+        newMovie.title = req.body.title;
+        newMovie.year = req.body.year;
+        newMovie.actors = [];
+
+        for(let actor of req.body.actors){
+            newMovie.actors.push(actor);
+        }
+
+        (new this.db.movie(newMovie)).save().then(() => res.send('OK'));
+    }
+
+}

@@ -29,11 +29,6 @@ export class UserRoute extends BaseRoute{
 
         let newUser: IUser = {};
 
-        console.log(req.body.userName);
-        console.log(req.body.password);
-        console.log(req.body.firstName);
-        console.log(req.body.lastName);
-
         newUser.userName = req.body.userName;
         newUser.password = req.body.password;
         newUser.firstName = req.body.firstName;
