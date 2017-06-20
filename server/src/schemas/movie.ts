@@ -1,5 +1,5 @@
 import { Document, Schema, Model, model} from "mongoose";
-import {IMovie} from '../interfaces/movie';
+import {IMovie, IMovieRate} from '../interfaces/movie';
 
 
 export interface IMovieModel extends IMovie, Document{
@@ -10,7 +10,13 @@ export let MovieSchema: Schema = new Schema({
     createdAt: Date,
     title: String,
     year: Number,
-    actors: [{type: String}]
+    actors: [{type: String}],
+    rates : [{
+            userId : String,
+            firstName : String,
+            lastName : String,
+            rating : Number
+    }]
 });
 
 MovieSchema.pre("save", next => {

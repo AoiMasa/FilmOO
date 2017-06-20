@@ -1,6 +1,6 @@
 import { suite, test } from 'mocha-typescript';
 import { MovieSchema, IMovieModel } from '../src/schemas/movie';
-import { IMovie } from '../src/interfaces/movie';
+import {IMovie, IMovieRate} from '../src/interfaces/movie';
 import { baseModelTest }  from './baseModelTest';
 import mongoose = require('mongoose');
 import * as chai from 'chai';
@@ -51,6 +51,64 @@ class MovieModelTest extends baseModelTest{
         result.year.should.equal(newMovie.year);
         result.actors[0].should.equal(newMovie.actors[0]);
         result.actors[1].should.equal(newMovie.actors[1]);
+    }
+
+    @test('From REST - Find one movie by title')
+    public async findOneMovieByTitle() {
+
+        await (new MovieModelTest.Movie(this.data)).save();
+        const url = `/movies/findonebytitle/${this.data.title}`;
+        const result = await chai.request(server.expressApp).get(url).then();
+
+        result.body._id.should.exist;
+        result.body.title.should.equal(this.data.title);
+        result.body.year.should.equal(this.data.year);
+        result.body.actors[0].should.equal(this.data.actors[0]);
+        result.body.actors[1].should.equal(this.data.actors[1]);
+    }
+
+    @test('From REST - Find one movie by id')
+    public async findOneMovieById() {
+
+        let newMovie: IMovie = {
+            title : 'La fête de poilu',
+            year : 2002,
+            actors : ['toto','tutu']
+        };
+
+        const newMovieWithId = await (new MovieModelTest.Movie(newMovie)).save();
+
+        const url = `/movies/findonebyid/${newMovieWithId._id}`;
+        const result = await chai.request(server.expressApp).get(url).then();
+
+        result.body._id.should.exist;
+        result.body.title.should.equal(newMovieWithId.title);
+        result.body.year.should.equal(newMovieWithId.year);
+        result.body.actors[0].should.equal(newMovieWithId.actors[0]);
+        result.body.actors[1].should.equal(newMovieWithId.actors[1]);
+    }
+
+    @test('From REST - Add rating to Movie')
+    public async addRatingToMovie() {
+
+        const url = `/movies/findonebytitle/${this.data.title}`;
+        let result = await chai.request(server.expressApp).get(url).then();
+
+        let newRate: IMovieRate = {
+            userId : '1',
+            firstName : 'Toto',
+            lastName : 'Le Hero',
+            rating : 5
+        };
+
+        await chai.request(server.expressApp).post(`/movies/addrating/${result.body._id}`).send(newRate).then();
+
+        result = await chai.request(server.expressApp).get(url).then();
+
+        result.body.rates[0].userId.should.equal(newRate.userId);
+        result.body.rates[0].lastName.should.equal(newRate.lastName);
+        result.body.rates[0].firstName.should.equal(newRate.firstName);
+        result.body.rates[0].rating.should.equal(newRate.rating);
     }
 
     @test('Create a new movie')
