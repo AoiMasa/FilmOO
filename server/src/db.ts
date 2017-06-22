@@ -3,13 +3,13 @@ import mongoose = require("mongoose");
 import { UserSchema,IUserModel } from "./schemas/user";
 import {IMovieModel, MovieSchema} from './schemas/movie';
 
-let config = require('config');
+//let config = require('config');
 /**
  * Created by Argon on 01.06.17.
  */
 export class DB{
 
-    private readonly MONGODB_CONNECTION : string = config.DBHost;//"mongodb://localhost:27017/Film00";
+    private readonly MONGODB_CONNECTION : string = "mongodb://localhost:27017/Film00";//config.DBHost;//
 
     private connection : mongoose.Connection;
     public user: mongoose.Model<IUserModel>;

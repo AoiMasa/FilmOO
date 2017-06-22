@@ -8,11 +8,14 @@
   "private": true,
   "dependencies": {
     "body-parser": "^1.17.1",
+    "config": "^1.26.1",
     "core-js": "^2.4.1",
     "express": "^4.15.2",
+    "imdb": "^1.1.0",
     "mongoose": "^4.9.5",
     "q": "^1.5.0",
     "rxjs": "^5.1.0",
+    "tmdbv3": "^0.1.2",
     "zone.js": "^0.8.4"
   },
   "devDependencies": {

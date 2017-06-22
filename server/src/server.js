@@ -54,4 +54,11 @@ exports.HttpServer = HttpServer;
 //Create and start the server
 exports.server = new HttpServer();
 exports.server.start();
+var imdb = require('imdb');
+imdb('tt3659388', function (err, data) {
+    if (err)
+        console.log(err.stack);
+    if (data)
+        console.log(data);
+});
 //# sourceMappingURL=server.js.map

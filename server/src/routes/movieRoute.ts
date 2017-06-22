@@ -8,7 +8,7 @@ import {IMovie, IMovieRate} from '../interfaces/movie';
 import {isNullOrUndefined} from 'util';
 
 'TMDB'
-const tmdb = require('tmdbv3').init('');
+const tmdb = require('tmdbv3').init('97c570e4bd1d4eaf2dde07999a7007bd');
 
 export class MovieRoute extends BaseRoute{
 
@@ -25,10 +25,6 @@ export class MovieRoute extends BaseRoute{
 
     private getMovieByTitle = (req: Request, res: Response, next: NextFunction) => {
         this.db.movie.findOne({title : req.params.title}).exec().then(x => {
-
-            tmdb.movie.info("Four Rooms", (err : any ,res : any) => {
-                                console.log(res.title);
-            });
 
             res.json(x);
             next();
@@ -50,6 +46,11 @@ export class MovieRoute extends BaseRoute{
     }
 
     private createMovie = (req: Request, res: Response) => {
+        tmdb.movie.info("5", (err : any ,res : any) => {
+            console.log(res.title);
+            //https://image.tmdb.org/t/p/w500/
+        });
+
         let newMovie: IMovie = {};
 
         newMovie.title = req.body.title;

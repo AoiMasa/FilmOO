@@ -57,7 +57,7 @@ export class UserService {
     public create(userName: string, password: string, firstName: string, lastName: string): Promise<Response> {
         const headers = new Headers({'Content-Type': 'application/json'});
         const options = new RequestOptions({headers: headers});
-        const url = `http://localhost:3000/newuser/`;
+        const url = `http://localhost:3000/users/newuser/`;
 
         return this.http.post(url, {
             'userName': userName,
@@ -69,9 +69,7 @@ export class UserService {
 
     authenticate(userName: string, password: string): boolean {
 
-
         this.currentUser = USERS.find(user => user.userName == userName && user.password == password);
-
 
         return this.currentUser != null;
     }
@@ -81,7 +79,7 @@ export class UserService {
     }
 
     public connect(userName: string, password: string): Promise<boolean> {
-        const url = `http://localhost:3000/authentificate/${userName}/${password}`;
+        const url = `http://localhost:3000/users/authentificate/${userName}/${password}`;
         return this.http.get(url).toPromise().then(this.onConnectAnswer);
     }
 

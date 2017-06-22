@@ -31,8 +31,20 @@ export class RegisterComponent implements OnInit {
             !this.isTextNullOrEmpty(firstname) &&
             !this.isTextNullOrEmpty(lastname)) {
 
-            if (this.userService.create(username, password, firstname, lastname)) this.router.navigate(['/user-profile']);
-            else alert('Username already exists.')
+            this.userService.create(username, password, firstname, lastname)
+                .then(() => {
+                    this.userService.connect(username, password).then(isSuccessed => {
+                        if (isSuccessed) {
+                            this.router.navigate(['/user-profile']);
+                        }else {
+                            alert("Unknown username and/or password !");
+                        }
+                    });
+                })
+                .catch(() => {alert('Username already exists.'); });
+
+
+
         }
         else if (this.isTextNullOrEmpty(username)) {
             alert('Username must not be empty !');

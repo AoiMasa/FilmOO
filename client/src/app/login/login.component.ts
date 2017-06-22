@@ -19,19 +19,20 @@ export class LoginComponent implements OnInit {
     }
 
     private  login(username: string, password: string) {
-        let isSuccessed: boolean = this.userService.authenticate(username, password);
+
         //SERVER VERSION
-        // this.userService.connect(username, password).then(isSuccessed => {
-        //if(isSuccessed) {
-        //this.router.navigate(['/user-profile']);
-        //}else{
-        //alert("Unknown username and/or password !");
-        //}
-        //});
+         this.userService.connect(username, password).then(isSuccessed => {
+        if(isSuccessed) {
+            this.router.navigate(['/user-profile']);
+        }else{
+            alert("Unknown username and/or password !");
+        }
+        });
 
         //MOCK VERSION
+        /*let isSuccessed: boolean = this.userService.authenticate(username, password);
         if (isSuccessed) this.router.navigate(['/user-profile']);
-        else alert("Unknown username and/or password !");
+        else alert("Unknown username and/or password !");*/
     }
 
     private  register() {

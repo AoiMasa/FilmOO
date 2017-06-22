@@ -27,35 +27,33 @@ gulp.task('Clientscripts - Debug', (done) => {
 
 //*** Server task ***
 gulp.task('Serverscripts', () => {
+    //gulp.src(["./server/config/dev.json"]).pipe(gulp.dest('./dist/config'));
     //Build server and copy it to dist folder
     return serverTsProject.src()
                           .pipe(serverTsProject())
-                          .js
-                          .pipe(gulp.dest('dist'));
+                          .js.pipe(gulp.dest('dist'));
 })
 
 
 
-
-
 //Start Node server
-gulp.task('StartAll', function() {
+//gulp.task('StartAll', function() {
     // configure nodemon
-    nodemon({
+    //nodemon({
         // the script to run the app
-        script: './dist/server.js',
+        //script: './dist/server.js',
         // this listens to changes in any of these files/routes and restarts the application
         //watch: ["server.js", "app.js", "routes/", 'public/*', 'public/*/**'],
-        ext: 'js'
+        //ext: 'js'
         // Below i'm using es6 arrow functions but you can remove the arrow and have it a normal .on('restart', function() { // then place your stuff in here }
-    })
+    //})
 
     //on('restart', () => {
     //    gulp.src('server.js')
         // I've added notify, which displays a message on restart. Was more for me to test so you can remove this
     //        .pipe(notify('Running the start tasks and stuff'));
     //});
-});
+//});
 
 
 // By adding this, we can run "gulp watch" to automatically
