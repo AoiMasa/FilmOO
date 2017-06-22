@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {Router} from "@angular/router";
 import {UserService} from "../user/user.service";
 import {Movie} from "../movie/movie";
+import {ConfirmationService, Message} from "primeng/primeng";
 
 @Component({
     selector: 'app-user-profile',
@@ -11,9 +12,11 @@ import {Movie} from "../movie/movie";
 export class UserProfileComponent implements OnInit {
 
     username: string;
-    movies: Movie[]
+    movies: Movie[];
+    msgs: Message[];
 
-    constructor(private router: Router, private userService: UserService) {
+    constructor(private userService: UserService,private confirmationService: ConfirmationService) {
+        this.msgs = []
     }
 
     ngOnInit() {
@@ -24,12 +27,27 @@ export class UserProfileComponent implements OnInit {
         else this.username = "Default";
     }
 
-    private  addMovies() {
-        this.router.navigate(['/movie-add']);
-    }
-
     updateMovieRating(movie: Movie, newRating: number) {
         this.userService.updateMovieRating(movie, newRating);
+    }
+    removeMovieFromCollection(movie: Movie)
+    {
+      this.msgs = [];
+        this.confirmationService.confirm({
+            message: 'Do you want to remove this movie from your collection ?',
+            header: 'Remove Confirmation',
+            icon: 'fa fa-trash',
+            accept: () => {
+
+                if (this.userService.removeMovieFromCollection(movie)) this.msgs.push({severity:'success', summary:'Success Message', detail:movie.name + " was removed from your collection."});
+                else this.msgs.push({severity:'error', summary:'Error Message', detail:movie.name+ " could not be removed. Contact the administrator."});
+            },
+            reject: () => {
+            }
+        });
+
+
+
     }
 
 }

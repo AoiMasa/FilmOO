@@ -22,6 +22,8 @@
     </table>
 </div>
 <div id="search-result">
+    <p-growl [(value)]="msgs"></p-growl>
+
     <p-dataList [value]="result" [paginator]="true" [rows]="5">
         <p-header>
             List of Movie
@@ -34,12 +36,12 @@
                     <div class="ui-grid-col-5">
                         <div class="ui-grid ui-grid-responsive ui-fluid">
                             <div class="ui-grid-row">
-                                <div class="ui-grid-col-2">Name:</div>
-                                <div class="ui-grid-col-10"><strong>{{movie.name}}</strong></div>
+                                <div class="ui-grid-col-4"><strong>Name</strong></div>
+                                <div>{{movie.name}}</div>
                             </div>
                             <div class="ui-grid-row">
-                                <div class="ui-grid-col-2">Global rating:</div>
-                                <div class="ui-grid-col-10">{{movie.rating}}</div>
+                                <div class="ui-grid-col-4"><strong>Global rating:</strong></div>
+                                <div>{{movie.rating}}</div>
                             </div>
                         </div>
                     </div>

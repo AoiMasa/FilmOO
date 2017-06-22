@@ -40,6 +40,18 @@ export class UserService {
         return isAdded;
     }
 
+
+    removeMovieFromCollection(movie: Movie): boolean {
+        let isRemoved = false;
+        //Check if it's doesn't already exist on the user's collection
+        if (movie != null) {
+            //Add movie to user's collection
+            this.currentUser.movies.splice( this.currentUser.movies.indexOf(movie), 1);
+            isRemoved = true;
+        }
+        return isRemoved;
+    }
+
     //
     // create(userName: string, password: string, firstName: string, lastName: string): boolean {
     //     let isCreated = false;
