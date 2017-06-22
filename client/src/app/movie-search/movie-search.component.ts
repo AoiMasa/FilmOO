@@ -15,6 +15,7 @@ import 'rxjs/add/operator/debounceTime';
 import 'rxjs/add/operator/distinctUntilChanged';
 import {UserService} from "../user/user.service";
 import {Message, SelectItem} from "primeng/primeng";
+import {isNullOrUndefined} from "util";
 
 
 @Component({
@@ -46,7 +47,7 @@ export class MovieSearchComponent implements OnInit {
 
 
     ngOnInit() {
-        this.movies = this.searchTerms
+       /* this.movies = this.searchTerms
             .debounceTime(300)        // wait 300ms after each keystroke before considering the term
             .distinctUntilChanged()   // ignore if next search term is same as previous
             .switchMap(term => term   // switch to new observable each time the term changes
@@ -58,7 +59,8 @@ export class MovieSearchComponent implements OnInit {
                 // TODO: add real error handling
                 console.log(error);
                 return Observable.of<Movie[]>([]);
-            });
+            });*/
+        this.addMoviesToResult("Kadens War");
     }
 
 
@@ -74,40 +76,43 @@ export class MovieSearchComponent implements OnInit {
     addMoviesToResult(term: string): void {
         this.result = []; //Clear old results
 
-        let movies: Movie[] = [];
+        //let movies: Movie[] = [];
 
         switch (this.selectedFilter) {
             case "All":
-                movies = this.movieService.findMovies(term);
+                 this.movieService.findMovies(term).then(this.displayMovies);
                 break;
             case "Movies":
-                movies = this.movieService.findMoviesByName(term);
+                //movies = this.movieService.findMoviesByName(term);
                 break;
             case "Actors":
-                movies = this.movieService.findMoviesByActor(term);
+                //movies = this.movieService.findMoviesByActor(term);
                 break;
             default:
                 alert("Filter problem");
                 break;
         }
-
-        for (var _i = 0; _i < movies.length; _i++) {
-            let m: Movie = movies[_i] as Movie;
-            this.result.push(m);
-            m = null;
-        }
     }
 
-
+    private displayMovies = (movies : Movie[]) => {
+        if(movies != null) {
+            let newRes : Movie[] = [];
+            for (var _i = 0; _i < movies.length; _i++) {
+                let m: Movie = movies[_i] as Movie;
+                newRes.push(m);
+            }
+            this.result = newRes;
+        }
+    }
 
 
     addMovie(movie: Movie): void {
         this.msgs = [];
 
         if (this.userService.addMovieToCollection(movie)) {
-            this.msgs.push({severity:'success', summary:'Success Message', detail:movie.name + " was added to your collection !"});
+            this.msgs.push({severity:'success', summary:'Success Message', detail:movie.title + " was added to your collection !"});
             this.result.splice(this.result.indexOf(movie), 1);
         }
-        else this.msgs.push({severity:'warn', summary:'Warn Message', detail:movie.name + " is already to your collection !"});
+        else this.msgs.push({severity:'warn', summary:'Warn Message', detail:movie.title + " is already to your collection !"});
     }
 }

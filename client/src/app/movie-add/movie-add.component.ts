@@ -16,8 +16,8 @@ export class MovieAddComponent implements OnInit {
     }
 
     addMovie(movie: Movie): void {
-        if (this.userService.addMovieToCollection(movie)) alert(movie.name + " was added to your collection !");
-        else  alert(movie.name + " is already to your collection !");
+        if (this.userService.addMovieToCollection(movie)) alert(movie.title + " was added to your collection !");
+        else  alert(movie.title + " is already to your collection !");
     }
 
 }

@@ -39,8 +39,8 @@ export class UserProfileComponent implements OnInit {
             icon: 'fa fa-trash',
             accept: () => {
 
-                if (this.userService.removeMovieFromCollection(movie)) this.msgs.push({severity:'success', summary:'Success Message', detail:movie.name + " was removed from your collection."});
-                else this.msgs.push({severity:'error', summary:'Error Message', detail:movie.name+ " could not be removed. Contact the administrator."});
+                if (this.userService.removeMovieFromCollection(movie)) this.msgs.push({severity:'success', summary:'Success Message', detail:movie.title + " was removed from your collection."});
+                else this.msgs.push({severity:'error', summary:'Error Message', detail:movie.title+ " could not be removed. Contact the administrator."});
             },
             reject: () => {
             }

@@ -9,16 +9,17 @@ import {IUser} from '../../../../server/src/interfaces/user';
 import {isNullOrUndefined} from 'util';
 
 //Test data
-const MOVIES: Movie[] = [
+/*const MOVIES: Movie[] = [
     {id: 1, name: 'Her', rating: 4, actors: []},
     {id: 2, name: 'Guardians of the galaxy', rating: 5, actors: []},
     {id: 3, name: 'Split', rating: 2, actors: []}
-];
+];*/
+/*
 
 const USERS: User[] = [
     {userName: 'Aoi', password: '123', firstName: 'Joëlle', lastName: 'Perritaz', movies: [MOVIES[0]]},
     {userName: 'Argon', password: '456', firstName: 'Sébastien', lastName: 'Schoepfer', movies: [MOVIES[1], MOVIES[2]]},
-];
+];*/
 
 
 @Injectable()
@@ -32,7 +33,7 @@ export class UserService {
     addMovieToCollection(movie: Movie): boolean {
         let isAdded = false;
         //Check if it's doesn't already exist on the user's collection
-        if (movie != null && this.currentUser.movies.find(m => m.name == movie.name) == null) {
+        if (movie != null && this.currentUser.movies.find(m => m.title == movie.title) == null) {
             //Add movie to user's collection
             this.currentUser.movies.push(Object.create(movie));
             isAdded = true;
@@ -79,15 +80,15 @@ export class UserService {
         }, options).toPromise();
     }
 
-    authenticate(userName: string, password: string): boolean {
+    /*authenticate(userName: string, password: string): boolean {
 
         this.currentUser = USERS.find(user => user.userName == userName && user.password == password);
 
         return this.currentUser != null;
     }
-
+     */
     updateMovieRating(movie: Movie, newRating: number): void {
-        movie.rating = newRating;
+        //movie.rating = newRating;
     }
 
     public connect(userName: string, password: string): Promise<boolean> {

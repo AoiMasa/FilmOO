@@ -3,13 +3,13 @@
 
         <tr>
             <td>
-                <input #searchBox id="search-box" (keyup)="search(searchBox.value)"/>
+                <input #searchBox id="search-box" /> <!-- (keyup)="search(searchBox.value)" -->
                 <div>
                     <!-- async pipe subscribes to the Observable and produces array of heroes to *ngFor -->
-                    <div *ngFor="let movie of movies | async"
+                    <!--<div *ngFor="let movie of movies | async"
                          (click)="addMovieToResult(movie)" class="search-result">
-                        {{movie.name}}
-                    </div>
+                        {{movie.title}}
+                    </div>-->
                 </div>
             </td>
             <td>
@@ -21,7 +21,18 @@
         </tr>
     </table>
 </div>
+
+
+<UL>
+    <LI *ngFor="let movie of result">
+        <p>{{movie.title}}</p>
+    </LI>
+
+</UL>
+
 <div id="search-result">
+
+
     <p-growl [(value)]="msgs"></p-growl>
 
     <p-dataList [value]="result" [paginator]="true" [rows]="5">
@@ -37,12 +48,12 @@
                         <div class="ui-grid ui-grid-responsive ui-fluid">
                             <div class="ui-grid-row">
                                 <div class="ui-grid-col-4"><strong>Name</strong></div>
-                                <div>{{movie.name}}</div>
+                                <div>{{movie.title}}</div>
                             </div>
-                            <div class="ui-grid-row">
+                            <!--<div class="ui-grid-row">
                                 <div class="ui-grid-col-4"><strong>Global rating:</strong></div>
                                 <div>{{movie.rating}}</div>
-                            </div>
+                            </div>-->
                         </div>
                     </div>
                     <div class="ui-grid-col-1" style="text-align:left"><i class="fa fa-plus" (click)="addMovie(movie)"
