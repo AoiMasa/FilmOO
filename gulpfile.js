@@ -1,45 +1,41 @@
 "use strict";
 
 let gulp = require('gulp');
+let gulpsync = require('gulp-sync')(gulp);
 let ts = require('gulp-typescript');
-
+let spawnSync = require('child_process').spawnSync;
 let serverTsProject = ts.createProject('server/tsconfig.json');
+let nodemon = require('gulp-nodemon');
 
 //*** MainTask ***
-gulp.task('Default', [
-    'Clientscripts',
-    'Serverscripts',
-    'StartAll'
-]);
+gulp.task('build',gulpsync.async(['Serverscripts','Clientscripts']));
 
+gulp.task('default',['build']);
 
 //*** Client task ***
-var spawn = require('child_process').spawn;
-
 gulp.task('Clientscripts', (done) => {
     //Build client
-    spawn('ng', ['build'], { cwd: './client/', stdio: 'inherit' }).on('close', done);
-
-    //Copie client to dist folder
+    spawnSync('ng', ['build'], { cwd: './client/', stdio: 'inherit', shell: true });
+    //Copy client to dist folder
     gulp.src(["./client/dist/*"]).pipe(gulp.dest('./dist'));
 });
 
 gulp.task('Clientscripts - Debug', (done) => {
     //Build client
-    spawn('ng', ['server'], { cwd: './client/', stdio: 'inherit' }).on('close', done);
+    spawnSync('ng', ['server'], { cwd: './client/', stdio: 'inherit', shell: true });
 });
 
 //*** Server task ***
 gulp.task('Serverscripts', () => {
     //Build server and copy it to dist folder
     return serverTsProject.src()
-                        .pipe(serverTsProject())
-                        .js
-                        .pipe(gulp.dest('dist'));
+                          .pipe(serverTsProject())
+                          .js
+                          .pipe(gulp.dest('dist'));
 })
 
 
-var nodemon = require('gulp-nodemon')
+
 
 
 //Start Node server
