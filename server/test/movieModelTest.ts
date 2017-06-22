@@ -53,6 +53,20 @@ class MovieModelTest extends baseModelTest{
         result.actors[1].should.equal(newMovie.actors[1]);
     }
 
+    @test('From REST - Find movies by title')
+    public async findByTitle() {
+
+        await (new MovieModelTest.Movie(this.data)).save();
+        const url = `/movies/findbytitle/${this.data.title}`;
+        const result = await chai.request(server.expressApp).get(url).then();
+
+        result.body._id.should.exist;
+        result.body.title.should.equal(this.data.title);
+        result.body.year.should.equal(this.data.year);
+        result.body.actors[0].should.equal(this.data.actors[0]);
+        result.body.actors[1].should.equal(this.data.actors[1]);
+    }
+
     @test('From REST - Find one movie by title')
     public async findOneMovieByTitle() {
 

@@ -30,18 +30,18 @@ export class MovieService {
     }*/
 
     findMovies(term: string): Promise<IMovie[]> {
-        const url = `http://localhost:3000/movies/findonebytitle/${term}`;
+        const url = `http://localhost:3000/movies/findbytitle/${term}`;
 
 
         return this.http.get(url).toPromise().then(response => {
-            //if (!isNullOrUndefined(response) && !isNullOrUndefined(response.json())){
 
+            if (response != null && response.json() != null){
                 let movies : IMovie[] =  [];
                 movies.push(response.json() as IMovie);
-                return movies ;
-           // }else{
-           //     return null;
-           // }
+                return movies;
+            }else{
+                return null;
+            }
         });
 
         // return MOVIES.filter(m => m.name.toUpperCase().includes(term.toUpperCase()) || m.actors.find(a => a.toUpperCase().includes(term.toUpperCase())));

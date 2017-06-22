@@ -7,15 +7,13 @@ import {Movie} from '../schemas/movie';
 import {IMovie, IMovieRate} from '../interfaces/movie';
 import {isNullOrUndefined} from 'util';
 
-'TMDB'
-const tmdb = require('tmdbv3').init('97c570e4bd1d4eaf2dde07999a7007bd');
-
 export class MovieRoute extends BaseRoute{
 
     public getRouter() : express.Router{
         let router = express.Router();
 
-        router.get("/findonebytitle/:title",this.getMovieByTitle);
+        router.get("/findbytitle/:title",this.getMovieByTitle);
+        router.get("/findonebytitle/:title",this.getOneMovieByTitle);
         router.get("/findonebyid/:id",this.getMovieById);
         router.post("/newmovie",this.createMovie);
         router.post("/addrating/:movieid/",this.rateMovie);
@@ -24,6 +22,14 @@ export class MovieRoute extends BaseRoute{
     }
 
     private getMovieByTitle = (req: Request, res: Response, next: NextFunction) => {
+        let reg : RegExp = new RegExp('.*');
+        this.db.movie.where('title').regex(reg).exec().then(x => {
+            res.json(x);
+            next();
+        })
+    }
+
+    private getOneMovieByTitle = (req: Request, res: Response, next: NextFunction) => {
         this.db.movie.findOne({title : req.params.title}).exec().then(x => {
 
             res.json(x);
@@ -46,11 +52,6 @@ export class MovieRoute extends BaseRoute{
     }
 
     private createMovie = (req: Request, res: Response) => {
-        tmdb.movie.info("5", (err : any ,res : any) => {
-            console.log(res.title);
-            //https://image.tmdb.org/t/p/w500/
-        });
-
         let newMovie: IMovie = {};
 
         newMovie.title = req.body.title;
