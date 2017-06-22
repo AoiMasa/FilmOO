@@ -14,7 +14,7 @@ import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/debounceTime';
 import 'rxjs/add/operator/distinctUntilChanged';
 import {UserService} from "../user/user.service";
-import {SelectItem} from "primeng/primeng";
+import {Message, SelectItem} from "primeng/primeng";
 
 
 @Component({
@@ -27,6 +27,7 @@ export class MovieSearchComponent implements OnInit {
     result: Movie[];
     filters: SelectItem[];
     selectedFilter: string;
+    msgs: Message[];
 
     private searchTerms = new Subject<string>();
 
@@ -35,6 +36,7 @@ export class MovieSearchComponent implements OnInit {
                 private movieService: MovieService) {
         this.result = [];
         this.filters = [];
+        this.msgs = [];
         this.filters.push({label: 'All', value: 'All'});
         this.filters.push({label: 'Movies', value: 'Movies'});
         this.filters.push({label: 'Actors', value: 'Actors'});
@@ -96,11 +98,16 @@ export class MovieSearchComponent implements OnInit {
         }
     }
 
+
+
+
     addMovie(movie: Movie): void {
+        this.msgs = [];
+
         if (this.userService.addMovieToCollection(movie)) {
-            alert(movie.name + " was added to your collection !");
+            this.msgs.push({severity:'success', summary:'Success Message', detail:movie.name + " was added to your collection !"});
             this.result.splice(this.result.indexOf(movie), 1);
         }
-        else  alert(movie.name + " is already to your collection !");
+        else this.msgs.push({severity:'warn', summary:'Warn Message', detail:movie.name + " is already to your collection !"});
     }
 }

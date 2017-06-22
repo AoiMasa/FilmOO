@@ -9,7 +9,7 @@ import {MaterialModule} from '@angular/material';
 import {UserService} from "./user/user.service";
 
 //PrimeFace
-import {ButtonModule, PanelModule} from 'primeng/primeng';
+import {ButtonModule, ConfirmationService, ConfirmDialogModule, PanelModule} from 'primeng/primeng';
 import {AppComponent} from './app.component';
 import {LoginComponent} from './login/login.component';
 import {RegisterComponent} from './register/register.component';
@@ -22,6 +22,9 @@ import {MovieService} from "./movie/movie.service";
 import {DataListModule} from 'primeng/primeng';
 import {SpinnerModule} from 'primeng/primeng';
 import {DropdownModule} from 'primeng/primeng';
+import {GrowlModule} from 'primeng/primeng';
+import {TabMenuModule} from 'primeng/primeng';
+import {MenuComponent} from "./menu/menu.component";
 
 
 @NgModule({
@@ -31,7 +34,8 @@ import {DropdownModule} from 'primeng/primeng';
         RegisterComponent,
         MovieAddComponent,
         MovieSearchComponent,
-        UserProfileComponent
+        UserProfileComponent,
+        MenuComponent
     ],
     imports: [
         BrowserModule,
@@ -45,11 +49,15 @@ import {DropdownModule} from 'primeng/primeng';
         AppRoutingModule,
         DataListModule,
         SpinnerModule,
-        DropdownModule
+        DropdownModule,
+        GrowlModule,
+        TabMenuModule,
+        ConfirmDialogModule
     ],
     providers: [
         UserService,
-        MovieService
+        MovieService,
+        ConfirmationService
     ],
     bootstrap: [AppComponent]
 })
