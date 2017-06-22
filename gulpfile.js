@@ -1,39 +1,57 @@
 "use strict";
 
 let gulp = require('gulp');
-let gulpsync = require('gulp-sync')(gulp);
 let ts = require('gulp-typescript');
 let spawnSync = require('child_process').spawnSync;
 let serverTsProject = ts.createProject('server/tsconfig.json');
 let nodemon = require('gulp-nodemon');
+let runSequence = require('run-sequence');
 
 //*** MainTask ***
-gulp.task('build',gulpsync.async(['Serverscripts','Clientscripts']));
 
-gulp.task('default',['build']);
+gulp.task('default',['Build-Run-All']);
+
+gulp.task('Build-Run-All',function(){
+    runSequence(['Build-Client-PROD','Build-Server-PROD'],'Start-Server-PROD');
+});
+
 
 //*** Client task ***
-gulp.task('Clientscripts', (done) => {
+gulp.task('Build-Client-PROD', (done) => {
     //Build client
     spawnSync('ng', ['build'], { cwd: './client/', stdio: 'inherit', shell: true });
     //Copy client to dist folder
     gulp.src(["./client/dist/*"]).pipe(gulp.dest('./dist'));
 });
 
-gulp.task('Clientscripts - Debug', (done) => {
+gulp.task('Client-DEBUG', (done) => {
     //Build client
     spawnSync('ng', ['server'], { cwd: './client/', stdio: 'inherit', shell: true });
 });
 
 //*** Server task ***
-gulp.task('Serverscripts', () => {
-    //gulp.src(["./server/config/dev.json"]).pipe(gulp.dest('./dist/config'));
+
+gulp.task('Build-Server-PROD', () => {
+    //Push config
+    gulp.src(["./server/config/dev§.json"]).pipe(gulp.dest('./dist/config'));
+    gulp.src(["./server/config/default.json"]).pipe(gulp.dest('./dist/config'));
     //Build server and copy it to dist folder
     return serverTsProject.src()
                           .pipe(serverTsProject())
                           .js.pipe(gulp.dest('dist'));
 })
 
+gulp.task('Build-Server-TEST', () => {
+    spawnSync('tsc', ['-p tsconfig.test.json'], { cwd: './server', stdio: 'inherit', shell: true });
+});
+
+gulp.task('Start-Server-PROD', () => {
+    spawnSync('node', ['server.js'], { cwd: './dist', stdio: 'inherit', shell: true });
+});
+
+gulp.task('Build-and-Start-Server',function(){
+    runSequence('Build-Server-PROD','Start-Server-PROD');
+});
 
 
 //Start Node server

@@ -56,16 +56,43 @@ class MovieModelTest extends baseModelTest{
     @test('From REST - Find movies by title')
     public async findByTitle() {
 
-        await (new MovieModelTest.Movie(this.data)).save();
-        const url = `/movies/findbytitle/${this.data.title}`;
+        let newMovie1: IMovie = {title : 'La fête codeatrouver 1111',};
+        let newMovie2: IMovie = {title : 'La fête codeAtrouver 2222',};
+        let newMovie3: IMovie = {title : 'La fête des 3333',};
+
+        await (new MovieModelTest.Movie(newMovie1)).save();
+        await (new MovieModelTest.Movie(newMovie2)).save();
+        await (new MovieModelTest.Movie(newMovie3)).save();
+
+        const url = `/movies/findbytitle/codeAtrouver`;
         const result = await chai.request(server.expressApp).get(url).then();
 
-        result.body._id.should.exist;
-        result.body.title.should.equal(this.data.title);
-        result.body.year.should.equal(this.data.year);
-        result.body.actors[0].should.equal(this.data.actors[0]);
-        result.body.actors[1].should.equal(this.data.actors[1]);
+        let moviesRes : IMovie[] = result.body as IMovie[];
+
+        moviesRes.length.should.equal(2);
     }
+
+    @test('From REST - Find movies by actor')
+    public async findByActor() {
+
+        let newMovie1: IMovie = {title : 'aaaa', actors : ['111','22 findme 22']};
+        let newMovie2: IMovie = {title : 'bbbb', actors : ['222','22 findMe 22']};
+        let newMovie3: IMovie = {title : 'cccc', actors : ['333','2222']};
+
+        await (new MovieModelTest.Movie(newMovie1)).save();
+        await (new MovieModelTest.Movie(newMovie2)).save();
+        await (new MovieModelTest.Movie(newMovie3)).save();
+
+        const url = `/movies/findbyactor/findme`;
+        const result = await chai.request(server.expressApp).get(url).then();
+
+        let moviesRes : IMovie[] = result.body as IMovie[];
+
+        moviesRes.length.should.equal(2);
+    }
+
+
+    findbyactor
 
     @test('From REST - Find one movie by title')
     public async findOneMovieByTitle() {

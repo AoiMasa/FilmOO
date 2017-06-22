@@ -11,6 +11,7 @@
     "config": "^1.26.1",
     "core-js": "^2.4.1",
     "express": "^4.15.2",
+    "gul": "^1.0.0",
     "imdb": "^1.1.0",
     "mongoose": "^4.9.5",
     "q": "^1.5.0",
@@ -19,10 +20,11 @@
     "zone.js": "^0.8.4"
   },
   "devDependencies": {
-    "gulp": "*",
+    "gulp": "^3.9.1",
     "gulp-nodemon": "^2.2.1",
     "gulp-sync": "^0.1.4",
     "gulp-typescript": "*",
+    "run-sequence": "^1.2.2",
     "typescript": "*"
   }
 }

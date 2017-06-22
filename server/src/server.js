@@ -15,6 +15,7 @@ var HttpServer = (function () {
         this.db = new db_1.DB();
         this.onStartListening = function () {
             console.log('Server running on port ', _this.getPort(), ' - OK');
+            console.log('Connection to MongoDB : ', _this.db.MONGODB_CONNECTION);
         };
         this.expressApp = express();
         this.config();
@@ -54,11 +55,14 @@ exports.HttpServer = HttpServer;
 //Create and start the server
 exports.server = new HttpServer();
 exports.server.start();
-var imdb = require('imdb');
-imdb('tt3659388', function (err, data) {
+/*
+let imdb = require('imdb');
+
+imdb('tt3659388', (err : any, data : any) => {
     if (err)
         console.log(err.stack);
+
     if (data)
         console.log(data);
 });
-//# sourceMappingURL=server.js.map
+*/

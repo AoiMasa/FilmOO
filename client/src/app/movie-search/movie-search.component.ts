@@ -60,7 +60,7 @@ export class MovieSearchComponent implements OnInit {
                 console.log(error);
                 return Observable.of<Movie[]>([]);
             });*/
-        this.addMoviesToResult("Kadens War");
+        //this.addMoviesToResult("Kadens War");
     }
 
 
@@ -80,13 +80,13 @@ export class MovieSearchComponent implements OnInit {
 
         switch (this.selectedFilter) {
             case "All":
-                 this.movieService.findMovies(term).then(this.displayMovies);
+                 this.movieService.findMoviesByName(term).then(this.displayMovies);
                 break;
             case "Movies":
                 //movies = this.movieService.findMoviesByName(term);
                 break;
             case "Actors":
-                //movies = this.movieService.findMoviesByActor(term);
+                this.movieService.findMoviesByActor(term).then(this.displayMovies);
                 break;
             default:
                 alert("Filter problem");

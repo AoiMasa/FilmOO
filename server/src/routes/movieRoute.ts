@@ -12,7 +12,8 @@ export class MovieRoute extends BaseRoute{
     public getRouter() : express.Router{
         let router = express.Router();
 
-        router.get("/findbytitle/:title",this.getMovieByTitle);
+        router.get("/findbytitle/:title",this.getMoviesByTitle);
+        router.get("/findbyactor/:name",this.getMoviesByActor);
         router.get("/findonebytitle/:title",this.getOneMovieByTitle);
         router.get("/findonebyid/:id",this.getMovieById);
         router.post("/newmovie",this.createMovie);
@@ -21,9 +22,18 @@ export class MovieRoute extends BaseRoute{
         return router;
     }
 
-    private getMovieByTitle = (req: Request, res: Response, next: NextFunction) => {
-        let reg : RegExp = new RegExp('.*');
-        this.db.movie.where('title').regex(reg).exec().then(x => {
+    private getMoviesByTitle = (req: Request, res: Response, next: NextFunction) => {
+        let reg : RegExp = new RegExp(`.*${req.params.title}.*`, 'i'); //'i' to set case-insensitive regular exp.
+        this.db.movie.where('title').regex(reg).limit(100).exec().then(x => {
+            res.json(x);
+            next();
+        })
+    }
+
+    private getMoviesByActor = (req: Request, res: Response, next: NextFunction) => {
+        let reg : RegExp = new RegExp(`.*${req.params.name}.*`, 'i'); //'i' to set case-insensitive regular exp.
+
+        this.db.movie.where('actors').regex(reg).limit(100).exec().then(x => {
             res.json(x);
             next();
         })
@@ -31,7 +41,6 @@ export class MovieRoute extends BaseRoute{
 
     private getOneMovieByTitle = (req: Request, res: Response, next: NextFunction) => {
         this.db.movie.findOne({title : req.params.title}).exec().then(x => {
-
             res.json(x);
             next();
         })

@@ -68,6 +68,7 @@ export class HttpServer {
 
     private onStartListening = () => {
         console.log('Server running on port ', this.getPort(), ' - OK');
+        console.log('Connection to MongoDB : ', this.db.MONGODB_CONNECTION);
     }
 
 }
@@ -80,7 +81,7 @@ server.start();
 
 
 
-
+/*
 let imdb = require('imdb');
 
 imdb('tt3659388', (err : any, data : any) => {
@@ -90,3 +91,4 @@ imdb('tt3659388', (err : any, data : any) => {
     if (data)
         console.log(data);
 });
+*/

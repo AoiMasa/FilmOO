@@ -1,6 +1,6 @@
 import {Injectable} from "@angular/core";
 import {User} from "../user/user";
-import {Http} from "@angular/http";
+import {Http,Response} from "@angular/http";
 import {Observable} from "rxjs/Observable";
 import {Movie} from "./movie";
 import {isNullOrUndefined} from "util";
@@ -29,23 +29,37 @@ export class MovieService {
         return Observable.of(MOVIES.filter(m => m.name.toUpperCase().includes(term.toUpperCase())).slice(0, 1));
     }*/
 
-    findMovies(term: string): Promise<IMovie[]> {
+    findMoviesByName(term: string): Promise<IMovie[]> {
         const url = `http://localhost:3000/movies/findbytitle/${term}`;
-
-
-        return this.http.get(url).toPromise().then(response => {
-
-            if (response != null && response.json() != null){
-                let movies : IMovie[] =  [];
-                movies.push(response.json() as IMovie);
-                return movies;
-            }else{
-                return null;
-            }
-        });
+        return this.http.get(url).toPromise().then(this.convertMovies);
+        //
+        //     response => {
+        //
+        //     if (response != null && response.json() != null){
+        //         let movies : IMovie[] =  response.json() as IMovie[];
+        //         return movies;
+        //     }else{
+        //         return null;
+        //     }
+        // });
 
         // return MOVIES.filter(m => m.name.toUpperCase().includes(term.toUpperCase()) || m.actors.find(a => a.toUpperCase().includes(term.toUpperCase())));
     }
+
+    findMoviesByActor(term: string): Promise<IMovie[]> {
+        const url = `http://localhost:3000/movies/findbyactor/${term}`;
+        return this.http.get(url).toPromise().then(this.convertMovies);
+    }
+
+    private convertMovies = (response : Response) :  IMovie[] | PromiseLike<IMovie[]> => {
+        if (response != null && response.json() != null){
+            let movies : IMovie[] =  response.json() as IMovie[];
+            return movies;
+        }else{
+            return null;
+        }
+    }
+
 /*
     findMoviesByName(term: string): Movie[] {
         return MOVIES.filter(m => m.name.toUpperCase().includes(term.toUpperCase()));
