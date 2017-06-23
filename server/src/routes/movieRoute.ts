@@ -86,7 +86,14 @@ export class MovieRoute extends BaseRoute{
         this.db.movie.findOne({_id : req.params.movieid}).exec().then(x => {
 
             if(isNullOrUndefined(x.rates)){ x.rates = new Array();}
-            x.rates.push(newRate);
+            let existing : IMovieRate[] = x.rates.filter(r => r.userId == newRate.userId);
+
+            if (existing.length > 0)
+            {
+                x.rates.splice(x.rates.indexOf(existing[0]),1,newRate);
+            }
+            else  x.rates.push(newRate);
+
 
             this.db.movie.update({_id : req.params.movieid}, x).exec()
                 .then(() => res.send('OK'))

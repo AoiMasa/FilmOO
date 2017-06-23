@@ -7,4 +7,18 @@ export class Movie implements IMovie {
     public title: string;
     public actors: string[];
     public rates: Array<IMovieRate>;
+
+}
+
+export  class MovieRate implements  IMovieRate{
+    userId : string;
+    firstName : string;
+    lastName : string;
+    rating : number;
+}
+
+export class Result
+{
+    movie: Movie;
+    userRating: IMovieRate;
 }

@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {Observable} from "rxjs/Observable";
-import {Movie} from "../movie/movie";
+import {Movie, Result} from "../movie/movie";
 import {Subject} from "rxjs/Subject";
 import {MovieService} from "../movie/movie.service";
 
@@ -16,6 +16,7 @@ import 'rxjs/add/operator/distinctUntilChanged';
 import {UserService} from "../user/user.service";
 import {Message, SelectItem} from "primeng/primeng";
 import {isNullOrUndefined} from "util";
+import {IMovieRate} from "../../../../server/src/interfaces/movie";
 
 
 @Component({
@@ -23,14 +24,18 @@ import {isNullOrUndefined} from "util";
     templateUrl: './movie-search.component.html',
     styleUrls: ['./movie-search.component.css']
 })
+
+
+
 export class MovieSearchComponent implements OnInit {
     movies: Observable<Movie[]>;
-    result: Movie[];
+    result: Result[];
     filters: SelectItem[];
     selectedFilter: string;
     msgs: Message[];
 
-    private searchTerms = new Subject<string>();
+
+    private  searchTerms = new Subject<string>();
 
 
     constructor(private userService: UserService,
@@ -66,9 +71,18 @@ export class MovieSearchComponent implements OnInit {
         this.searchTerms.next(term);
     }
 
+    private searchUserRating(movie: Movie) : IMovieRate{
+        let  userRates : Array<IMovieRate> = movie.rates.filter(r => r.userId == this.userService.currentUser._id);
+
+        if (userRates.length > 0 ) return userRates[0];
+        else return {userId:"-1", firstName: "Default", lastName: "Default", rating: 0};
+
+
+    }
+
     addMovieToResult(movie: Movie): void {
         this.result = []; //Clear old results
-        this.result.push(movie)
+        this.result.push({movie: movie, userRating: this.searchUserRating(movie)});
     }
 
     addMoviesToResult(term: string): void {
@@ -90,10 +104,10 @@ export class MovieSearchComponent implements OnInit {
 
     private displayMovies = (movies : Movie[]) => {
         if(movies != null) {
-            let newRes : Movie[] = [];
+            let newRes : Result[] = [];
             for (var _i = 0; _i < movies.length; _i++) {
                 let m: Movie = movies[_i] as Movie;
-                newRes.push(m);
+                newRes.push({movie:m, userRating:this.searchUserRating(m)});
             }
             this.result = newRes;
         }
@@ -105,11 +119,11 @@ export class MovieSearchComponent implements OnInit {
         //
         // if (this.userService.addMovieToCollection(movie)) {
         //     this.msgs.push({severity:'success', summary:'Success Message', detail:movie.title + " was added to your collection !"});
-        //     this.result.splice(this.result.indexOf(movie), 1);
-        // }
-        // //else this.msgs.push({severity:'warn', summary:'Warn Message', detail:movie.title + " is already to your collection !"});
+    }
 
-        this.userService.addMovieToCollection(movie)
-            .then();
+    updateMovieRating(movie: Movie, newRating: number) {
+        this.userService.updateMovieRating(movie, newRating)
+            .then(() => this.msgs.push({severity:'success', summary:'Success Message', detail:movie.title + " was rated " + newRating +"/5 !"}))
+        .catch (() => this.msgs.push({severity:'warn', summary:'warn Message', detail:"You failed"}));
     }
 }

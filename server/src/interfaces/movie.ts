@@ -13,3 +13,5 @@ export interface IMovie{
     actors?: Array<string>;
     rates?: Array<IMovieRate>;
 }
+
+

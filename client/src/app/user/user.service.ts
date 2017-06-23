@@ -6,7 +6,8 @@ import 'rxjs/add/operator/toPromise';
 import {User} from './user';
 import {Movie} from '../movie/movie';
 import {IUser} from '../../../../server/src/interfaces/user';
-import {isNullOrUndefined} from 'util';
+import {isNull, isNullOrUndefined} from 'util';
+import {IMovieRate} from "../../../../server/src/interfaces/movie";
 
 //Test data
 /*const MOVIES: Movie[] = [
@@ -93,8 +94,14 @@ export class UserService {
         return this.currentUser != null;
     }
      */
-    updateMovieRating(movie: Movie, newRating: number): void {
-        //movie.rating = newRating;
+    updateMovieRating(movie: Movie, newRating: number): Promise<void> {
+        const url = `http://localhost:3000/movies/addrating/${movie._id}`;
+        let headers = new Headers({'Content-Type': 'application/json'});
+
+        return this.http
+            .post(url,JSON.stringify({userId:this.currentUser._id, firstName: this.currentUser.firstName, lastName: this.currentUser.lastName, rating: newRating}), {headers: headers})
+            .toPromise()
+            .then(() => null)
     }
 
     public connect(userName: string, password: string): Promise<boolean> {
@@ -106,12 +113,13 @@ export class UserService {
         this.currentUser = null;
 
         if (value.json() != null) {
-            // const loadUser: User = new User(
-            //     value.json().userName,
-            //     value.json().password,
-            //     value.json().firstName,
-            //     value.json().lastName);
-            this.currentUser = value.json() as User;//loadUser;
+            const loadUser: User = new User(
+                value.json()._id,
+                value.json().userName,
+                value.json().password,
+                value.json().firstName,
+                value.json().lastName);
+            this.currentUser = loadUser;
         }
         return this.currentUser != null;
     }

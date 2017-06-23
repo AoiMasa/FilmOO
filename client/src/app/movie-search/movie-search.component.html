@@ -31,7 +31,7 @@
         <p-header>
             List of Movie
         </p-header>
-        <ng-template let-movie pTemplate="item">
+        <ng-template let-m pTemplate="item">
             <div class="ui-grid ui-grid-responsive ui-fluid"
                  style="font-size:16px;padding:20px;border-bottom:1px solid #D5D5D5;">
                 <div class="ui-grid-row">
@@ -40,7 +40,15 @@
                         <div class="ui-grid ui-grid-responsive ui-fluid">
                             <div class="ui-grid-row">
                                 <div class="ui-grid-col-4"><strong>Name</strong></div>
-                                <div>{{movie.title}}</div>
+                                <div>{{m.movie.title}}</div>
+                            </div>
+                            <div class="ui-grid-row">
+                                <div class="ui-grid-col-4"><strong>My rating:</strong></div>
+                                <div >
+                                    <p-spinner size="2" [(ngModel)]="m.userRating.rating" [min]="1" [max]="5" #ratingBox
+                                               id="rating-box"
+                                               (onChange)="updateMovieRating(m.movie,ratingBox.value)"></p-spinner>
+                                </div>
                             </div>
                             <!--<div class="ui-grid-row">
                                 <div class="ui-grid-col-4"><strong>Global rating:</strong></div>
@@ -48,7 +56,7 @@
                             </div>-->
                         </div>
                     </div>
-                    <div class="ui-grid-col-1" style="text-align:left"><i class="fa fa-plus" (click)="addMovie(movie)"
+                    <div class="ui-grid-col-1" style="text-align:left"><i class="fa fa-plus" (click)="addMovie(m.movie)"
                                                                           style="cursor:pointer;float:left;margin-top:10px"></i>
                     </div>
                 </div>
