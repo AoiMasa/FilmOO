@@ -8,7 +8,7 @@ import * as chai from 'chai';
 import {HttpServer, server} from '../src/server';
 
 @suite
-class MovieModelTest extends baseModelTest{
+export class MovieModelTest extends baseModelTest{
 
     private data: IMovie;
 
@@ -91,8 +91,6 @@ class MovieModelTest extends baseModelTest{
         moviesRes.length.should.equal(2);
     }
 
-
-    findbyactor
 
     @test('From REST - Find one movie by title')
     public async findOneMovieByTitle() {

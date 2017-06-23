@@ -38,11 +38,9 @@ export class MovieSearchComponent implements OnInit {
         this.result = [];
         this.filters = [];
         this.msgs = [];
-        this.filters.push({label: 'All', value: 'All'});
         this.filters.push({label: 'Movies', value: 'Movies'});
         this.filters.push({label: 'Actors', value: 'Actors'});
-        this.selectedFilter = "All";
-
+        this.selectedFilter = "Movies";
     }
 
 
@@ -76,14 +74,10 @@ export class MovieSearchComponent implements OnInit {
     addMoviesToResult(term: string): void {
         this.result = []; //Clear old results
 
-        //let movies: Movie[] = [];
-
         switch (this.selectedFilter) {
-            case "All":
-                 this.movieService.findMoviesByName(term).then(this.displayMovies);
-                break;
+
             case "Movies":
-                //movies = this.movieService.findMoviesByName(term);
+                this.movieService.findMoviesByName(term).then(this.displayMovies);
                 break;
             case "Actors":
                 this.movieService.findMoviesByActor(term).then(this.displayMovies);
@@ -107,12 +101,15 @@ export class MovieSearchComponent implements OnInit {
 
 
     addMovie(movie: Movie): void {
-        this.msgs = [];
+        // //this.msgs = [];
+        //
+        // if (this.userService.addMovieToCollection(movie)) {
+        //     this.msgs.push({severity:'success', summary:'Success Message', detail:movie.title + " was added to your collection !"});
+        //     this.result.splice(this.result.indexOf(movie), 1);
+        // }
+        // //else this.msgs.push({severity:'warn', summary:'Warn Message', detail:movie.title + " is already to your collection !"});
 
-        if (this.userService.addMovieToCollection(movie)) {
-            this.msgs.push({severity:'success', summary:'Success Message', detail:movie.title + " was added to your collection !"});
-            this.result.splice(this.result.indexOf(movie), 1);
-        }
-        else this.msgs.push({severity:'warn', summary:'Warn Message', detail:movie.title + " is already to your collection !"});
+        this.userService.addMovieToCollection(movie)
+            .then();
     }
 }

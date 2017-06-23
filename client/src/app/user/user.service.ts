@@ -30,15 +30,21 @@ export class UserService {
     constructor(private http: Http) {
     }
 
-    addMovieToCollection(movie: Movie): boolean {
-        let isAdded = false;
-        //Check if it's doesn't already exist on the user's collection
-        if (movie != null && this.currentUser.movies.find(m => m.title == movie.title) == null) {
-            //Add movie to user's collection
-            this.currentUser.movies.push(Object.create(movie));
-            isAdded = true;
-        }
-        return isAdded;
+    addMovieToCollection(movie: Movie): Promise<Response> {
+        // let isAdded = false;
+        // //Check if it's doesn't already exist on the user's collection
+        // if (movie != null && this.currentUser.movies.find(m => m.title == movie.title) == null) {
+        //     //Add movie to user's collection
+        //     this.currentUser.movies.push(Object.create(movie));
+        //     isAdded = true;
+        // }
+        // return isAdded;
+
+        const headers = new Headers({'Content-Type': 'application/json'});
+        const options = new RequestOptions({headers: headers});
+        const url = `http://localhost:3000/users/addmovie/${this.currentUser._id}`;
+
+        return this.http.post(url, {_id : movie._id}, options).toPromise();
     }
 
 
@@ -100,12 +106,12 @@ export class UserService {
         this.currentUser = null;
 
         if (value.json() != null) {
-            const loadUser: User = new User(
-                value.json().userName,
-                value.json().password,
-                value.json().firstName,
-                value.json().lastName);
-            this.currentUser = loadUser;
+            // const loadUser: User = new User(
+            //     value.json().userName,
+            //     value.json().password,
+            //     value.json().firstName,
+            //     value.json().lastName);
+            this.currentUser = value.json() as User;//loadUser;
         }
         return this.currentUser != null;
     }

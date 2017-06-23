@@ -5,6 +5,7 @@ import * as express from 'express';
 import {BaseRoute} from "./baseRoute";
 import {User} from '../schemas/user';
 import {IUser} from '../interfaces/user';
+import {ObjectID} from 'bson';
 
 export class UserRoute extends BaseRoute{
 
@@ -14,6 +15,7 @@ export class UserRoute extends BaseRoute{
         router.get("/users",this.getUsers);
         router.post("/newuser",this.createUser);
         router.get("/authentificate/:username/:password",this.authentificate);
+        router.post("/addmovie/:userid",this.addMovie);
 
         return router;
     }
@@ -26,13 +28,7 @@ export class UserRoute extends BaseRoute{
     }
 
     private createUser = (req: Request, res: Response) => {
-
-        let newUser: IUser = {};
-
-        newUser.userName = req.body.userName;
-        newUser.password = req.body.password;
-        newUser.firstName = req.body.firstName;
-        newUser.lastName = req.body.lastName;
+        let newUser: IUser = req.body as IUser;
 
         (new this.db.user(newUser)).save().then(() => res.send('OK'));
     }
@@ -43,6 +39,24 @@ export class UserRoute extends BaseRoute{
             next();
         })
     }
+
+    private addMovie = (req: Request, res: Response) => {
+
+        this.db.user.findOne({_id : req.params.userid}).exec().then(x => {
+          //  let user : IUser = x as IUser;
+            if(x != null){
+                if(x.movies != null) {
+                    x.movies = [];
+                }
+                x.movies.push(req.body as ObjectID);
+                x.save().then(() => {
+                    res.send('OK')
+                });
+            }
+        });
+
+    }
+
 
 
     /**

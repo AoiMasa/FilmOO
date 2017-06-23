@@ -11,7 +11,8 @@ export let UserSchema: Schema = new Schema({
     userName : String,
     password : String,
     firstName : String,
-    lastName : String
+    lastName : String,
+    movies : [{type: Schema.Types.ObjectId, ref: 'Movie'}]
 });
 
 UserSchema.pre("save", next => {
@@ -19,6 +20,7 @@ UserSchema.pre("save", next => {
     if (!this.createdAt) {
         this.createdAt = now;
     }
+
     next();
 });
 
