@@ -113,13 +113,14 @@ export class UserService {
         this.currentUser = null;
 
         if (value.json() != null) {
-            const loadUser: User = new User(
-                value.json()._id,
-                value.json().userName,
-                value.json().password,
-                value.json().firstName,
-                value.json().lastName);
-            this.currentUser = loadUser;
+            // const loadUser: User = new User(
+            //     value.json()._id,
+            //     value.json().userName,
+            //     value.json().password,
+            //     value.json().firstName,
+            //     value.json().lastName);
+
+            this.currentUser = value.json() as User; //loadUser;
         }
         return this.currentUser != null;
     }

@@ -34,7 +34,7 @@ export class UserRoute extends BaseRoute{
     }
 
     private authentificate = (req: Request, res: Response, next: NextFunction) => {
-        this.db.user.findOne({userName : req.params.username, password : req.params.password}).exec().then(x => {
+        this.db.user.findOne({userName : req.params.username, password : req.params.password}).populate('movies').exec().then(x => {
             res.json(x);
             next();
         })
