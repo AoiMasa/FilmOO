@@ -94,14 +94,14 @@ export class UserService {
         return this.currentUser != null;
     }
      */
-    updateMovieRating(movie: Movie, newRating: number): Promise<void> {
+    updateMovieRating(movie: Movie, newRating: number): Promise<Movie> {
         const url = `http://localhost:3000/movies/addrating/${movie._id}`;
         let headers = new Headers({'Content-Type': 'application/json'});
 
         return this.http
             .post(url,JSON.stringify({userId:this.currentUser._id, firstName: this.currentUser.firstName, lastName: this.currentUser.lastName, rating: newRating}), {headers: headers})
             .toPromise()
-            .then(() => null)
+            .then(() => movie)
     }
 
     public connect(userName: string, password: string): Promise<boolean> {
