@@ -5,6 +5,7 @@ import {IMovie, IMovieRate} from "../../../../server/src/interfaces/movie";
 export class Movie implements IMovie {
     public _id: string;
     public title: string;
+    public image : string;
     public actors: string[];
     public rates: Array<IMovieRate>;
 

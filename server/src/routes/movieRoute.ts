@@ -7,6 +7,7 @@ import {Movie} from '../schemas/movie';
 import {IMovie, IMovieRate} from '../interfaces/movie';
 import {isNullOrUndefined} from 'util';
 
+
 export class MovieRoute extends BaseRoute{
 
     public getRouter() : express.Router{
@@ -22,9 +23,12 @@ export class MovieRoute extends BaseRoute{
         return router;
     }
 
+
+
     private getMoviesByTitle = (req: Request, res: Response, next: NextFunction) => {
         let reg : RegExp = new RegExp(`.*${req.params.title}.*`, 'i'); //'i' to set case-insensitive regular exp.
         this.db.movie.where('title').regex(reg).limit(100).exec().then(x => {
+
             res.json(x);
             next();
         })

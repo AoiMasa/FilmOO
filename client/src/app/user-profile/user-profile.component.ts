@@ -21,8 +21,11 @@ export class UserProfileComponent implements OnInit {
 
     ngOnInit() {
         if (this.userService.currentUser != null) {
-            this.username = this.userService.currentUser.userName;
-            this.movies = this.userService.currentUser.movies;
+            this.userService.refreshCurrentUser().then((user) => {
+                this.username = user.userName;
+                this.movies = user.movies;
+            })
+
         }
         else this.username = "Default";
     }
@@ -30,6 +33,7 @@ export class UserProfileComponent implements OnInit {
     updateMovieRating(movie: Movie, newRating: number) {
         this.userService.updateMovieRating(movie, newRating);
     }
+
     removeMovieFromCollection(movie: Movie)
     {
       this.msgs = [];

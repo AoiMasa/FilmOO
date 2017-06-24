@@ -35,8 +35,6 @@ describe('LoginComponent', () => {
   });
 
   it('Should accept username input', () => {
-
-    component.userName = 'Toto';
     fixture.detectChanges();
     expect(el.textContent).toContain('input');
   });

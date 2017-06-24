@@ -12,17 +12,19 @@
         <div class="ui-grid ui-grid-responsive ui-fluid"
              style="font-size:16px;padding:20px;border-bottom:1px solid #D5D5D5;">
             <div class="ui-grid-row">
-                <div class="ui-grid-col-3" style="text-align:center"> <img height="128" width="128" src="assets/test.jpg"></div>
+                <div class="ui-grid-col-3" style="text-align:center">
+                    <img height="128" width="128" src="{{movie.image}}">
+                </div>
                 <div class="ui-grid-col-5">
                     <div class="ui-grid ui-grid-responsive ui-fluid">
                         <div class="ui-grid-row">
                             <div class="ui-grid-col-4"><strong>Name:</strong></div>
-                            <div>{{movie.name}}</div>
+                            <div>{{movie.title}} - {{movie.year}}</div>
                         </div>
                         <div class="ui-grid-row">
                             <div class="ui-grid-col-4"><strong>My rating:</strong></div>
                             <div >
-                                <p-spinner size="2" [(ngModel)]="movie.rating" [min]="1" [max]="5" #searchBox
+                                <p-spinner size="5" [(ngModel)]="movie.rating" [min]="1" [max]="5" #searchBox
                                            id="search-box"
                                            (keyup)="updateMovieRating(movie,searchBox.value)"></p-spinner>
                             </div>

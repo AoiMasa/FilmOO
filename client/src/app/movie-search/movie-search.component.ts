@@ -128,10 +128,11 @@ export class MovieSearchComponent implements OnInit {
 
 
     addMovie(movie: Movie): void {
-        // //this.msgs = [];
-        //
-        // if (this.userService.addMovieToCollection(movie)) {
-        //     this.msgs.push({severity:'success', summary:'Success Message', detail:movie.title + " was added to your collection !"});
+        this.msgs = [];
+
+        if (this.userService.addMovieToCollection(movie)) {
+            this.msgs.push({severity:'success', summary:'Success Message', detail:movie.title + " was added to your collection !"});
+        }
     }
 
     updateMovieRating(movie: Movie, newRating: number) {

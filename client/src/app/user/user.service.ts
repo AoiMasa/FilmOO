@@ -113,16 +113,19 @@ export class UserService {
         this.currentUser = null;
 
         if (value.json() != null) {
-            // const loadUser: User = new User(
-            //     value.json()._id,
-            //     value.json().userName,
-            //     value.json().password,
-            //     value.json().firstName,
-            //     value.json().lastName);
-
-            this.currentUser = value.json() as User; //loadUser;
+            this.currentUser = value.json() as User;
         }
         return this.currentUser != null;
+    }
+    public refreshCurrentUser(): Promise<User> {
+        const url = `http://localhost:3000/users/user/${this.currentUser._id}`;
+        return this.http.get(url).toPromise().then((user) => {
+            if (user.json() != null) {
+                this.currentUser = user.json() as User;
+            }
+            return this.currentUser;
+        });
+
     }
 
 }

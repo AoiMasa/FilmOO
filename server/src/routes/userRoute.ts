@@ -6,6 +6,10 @@ import {BaseRoute} from "./baseRoute";
 import {User} from '../schemas/user';
 import {IUser} from '../interfaces/user';
 import {ObjectID} from 'bson';
+import {IMovie} from '../interfaces/movie';
+
+
+let movie = require('node-movie');
 
 export class UserRoute extends BaseRoute{
 
@@ -15,6 +19,7 @@ export class UserRoute extends BaseRoute{
         router.get("/users",this.getUsers);
         router.post("/newuser",this.createUser);
         router.get("/authentificate/:username/:password",this.authentificate);
+        router.get("/user/:id",this.getUser);
         router.post("/addmovie/:userid",this.addMovie);
 
         return router;
@@ -40,16 +45,49 @@ export class UserRoute extends BaseRoute{
         })
     }
 
+    //
+    // private async completeWithImage(movies : IMovie[]){
+    //     for(let film of movies){
+    //         // await movie(film.title, function (err : any, data : any) {
+    //         //     if(err  || data.poster == null){
+    //         //         film.image = "http://www.51allout.co.uk/wp-content/uploads/2012/02/Image-not-found.gif";
+    //         //     }else{
+    //         //         film.image = data.poster;
+    //         //     }
+    //         //     console.log(film.image);
+    //         // });
+    //         // console.log(film.image);
+    //
+    //         await movie(film.title).then((x : any) => {
+    //             if(x.poster == null){
+    //                 film.image = "http://www.51allout.co.uk/wp-content/uploads/2012/02/Image-not-found.gif";
+    //             }else{
+    //                 film.image = x.poster;
+    //             }
+    //         }).catch((x : any) => {film.image = "http://www.51allout.co.uk/wp-content/uploads/2012/02/Image-not-found.gif";});
+    //     }
+    // }
+
+    private getUser = (req: Request, res: Response, next: NextFunction) => {
+        this.db.user.findOne({_id : req.params.id}).populate('movies').exec().then(x => {
+            res.json(x);
+            next();
+        })
+    }
+
     private addMovie = (req: Request, res: Response) => {
 
         this.db.user.findOne({_id : req.params.userid}).exec().then(x => {
           //  let user : IUser = x as IUser;
             if(x != null){
-                if(x.movies != null) {
+                if(x.movies == null) {
                     x.movies = [];
                 }
                 x.movies.push(req.body as ObjectID);
+
+
                 x.save().then(() => {
+                    console.log(`Adding Movie ${req.body.toString()} to user ${req.params.userid} - Movie count ${x.movies.length}`);
                     res.send('OK')
                 });
             }
