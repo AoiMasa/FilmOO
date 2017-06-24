@@ -80,9 +80,22 @@ export class MovieSearchComponent implements OnInit {
 
     }
 
+    private searchGlobalRating(movie:Movie): number
+    {
+        let globalRate: number = 0;
+
+        for (var _i = 0; _i < movie.rates.length; _i++) {
+            let m: IMovieRate = movie.rates[_i] as IMovieRate;
+            globalRate = globalRate + m.rating;
+        }
+        if ( movie.rates.length > 0 ) return globalRate / movie.rates.length;
+        else return 0;
+    }
+
+
     addMovieToResult(movie: Movie): void {
         this.result = []; //Clear old results
-        this.result.push({movie: movie, userRating: this.searchUserRating(movie)});
+        this.result.push({movie: movie, userRating: this.searchUserRating(movie),globalRating:this.searchGlobalRating(movie)});
     }
 
     addMoviesToResult(term: string): void {
@@ -107,7 +120,7 @@ export class MovieSearchComponent implements OnInit {
             let newRes : Result[] = [];
             for (var _i = 0; _i < movies.length; _i++) {
                 let m: Movie = movies[_i] as Movie;
-                newRes.push({movie:m, userRating:this.searchUserRating(m)});
+                newRes.push({movie:m, userRating:this.searchUserRating(m),globalRating:this.searchGlobalRating(m)});
             }
             this.result = newRes;
         }
@@ -122,8 +135,13 @@ export class MovieSearchComponent implements OnInit {
     }
 
     updateMovieRating(movie: Movie, newRating: number) {
+        this.msgs = [];
         this.userService.updateMovieRating(movie, newRating)
-            .then(() => this.msgs.push({severity:'success', summary:'Success Message', detail:movie.title + " was rated " + newRating +"/5 !"}))
+            .then(m => {this.result.find(mo => mo.movie == m).globalRating = this.searchGlobalRating(m);
+                        this.msgs.push({severity:'success', summary:'Success Message', detail:movie.title + " was rated " + newRating +"/5 !"}
+                        );})
         .catch (() => this.msgs.push({severity:'warn', summary:'warn Message', detail:"You failed"}));
+
+
     }
 }

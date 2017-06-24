@@ -21,4 +21,5 @@ export class Result
 {
     movie: Movie;
     userRating: IMovieRate;
+    globalRating: number;
 }
