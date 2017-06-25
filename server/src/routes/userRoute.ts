@@ -83,8 +83,14 @@ export class UserRoute extends BaseRoute{
                 if(x.movies == null) {
                     x.movies = [];
                 }
-                x.movies.push(req.body as ObjectID);
 
+                let id : ObjectID = new ObjectID(req.body._id);
+                if(!x.movies.some((x) => {
+                    return (x as ObjectID).toHexString() === id.toHexString();
+                })){
+                    x.movies.push(id);
+                }else{
+                }
 
                 x.save().then(() => {
                     console.log(`Adding Movie ${req.body.toString()} to user ${req.params.userid} - Movie count ${x.movies.length}`);

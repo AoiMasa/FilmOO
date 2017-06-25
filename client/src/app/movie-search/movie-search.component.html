@@ -27,7 +27,7 @@
 
     <p-growl [(value)]="msgs"></p-growl>
 
-    <p-dataList [value]="result" [paginator]="true" [rows]="5">
+    <p-dataList [value]="movies" [paginator]="true" [rows]="5">
         <p-header>
             List of Movie
         </p-header>
@@ -43,7 +43,7 @@
                         <div class="ui-grid ui-grid-responsive ui-fluid">
                             <div class="ui-grid-row">
                                 <div class="ui-grid-col-4"><strong>Name</strong></div>
-                                <div>{{m.movie.title}}</div>
+                                <div>{{m.title}}</div>
                             </div>
                             <div class="ui-grid-row">
                                 <div class="ui-grid-col-4"><strong>Global rating:</strong></div>
@@ -52,9 +52,9 @@
                             <div class="ui-grid-row">
                                 <div class="ui-grid-col-4"><strong>My rating:</strong></div>
                                 <div >
-                                    <p-spinner size="5" [(ngModel)]="m.userRating.rating" [min]="1" [max]="5" #ratingBox
+                                    <p-spinner size="5" [(ngModel)]="m.userRate" [min]="1" [max]="5" #ratingBox
                                                id="rating-box"
-                                               (onChange)="updateMovieRating(m.movie,ratingBox.value)"></p-spinner>
+                                               (onChange)="updateMovieRating(m,ratingBox.value)"></p-spinner>
                                 </div>
                             </div>
                         </div>

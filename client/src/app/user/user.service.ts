@@ -23,10 +23,10 @@ const USERS: User[] = [
 ];*/
 
 
+export let currentUser: User;
+
 @Injectable()
 export class UserService {
-
-    public currentUser: User;
 
     constructor(private http: Http) {
     }
@@ -43,7 +43,7 @@ export class UserService {
 
         const headers = new Headers({'Content-Type': 'application/json'});
         const options = new RequestOptions({headers: headers});
-        const url = `http://localhost:3000/users/addmovie/${this.currentUser._id}`;
+        const url = `http://localhost:3000/users/addmovie/${currentUser._id}`;
 
         return this.http.post(url, {_id : movie._id}, options).toPromise();
     }
@@ -54,7 +54,7 @@ export class UserService {
         //Check if it's doesn't already exist on the user's collection
         if (movie != null) {
             //Add movie to user's collection
-            this.currentUser.movies.splice( this.currentUser.movies.indexOf(movie), 1);
+            currentUser.movies.splice(currentUser.movies.indexOf(movie), 1);
             isRemoved = true;
         }
         return isRemoved;
@@ -99,9 +99,9 @@ export class UserService {
         let headers = new Headers({'Content-Type': 'application/json'});
 
         return this.http
-            .post(url,JSON.stringify({userId:this.currentUser._id, firstName: this.currentUser.firstName, lastName: this.currentUser.lastName, rating: newRating}), {headers: headers})
+            .post(url,JSON.stringify({userId: currentUser._id, firstName: currentUser.firstName, lastName: currentUser.lastName, rating: newRating}), {headers: headers})
             .toPromise()
-            .then(() => movie)
+            .then(() => movie);
     }
 
     public connect(userName: string, password: string): Promise<boolean> {
@@ -110,23 +110,27 @@ export class UserService {
     }
 
     public onConnectAnswer = (value: Response): boolean | PromiseLike<boolean> => {
-        this.currentUser = null;
+        currentUser = null;
 
         if (value.json() != null) {
-            this.currentUser = value.json() as User;
+            currentUser = User.createInstanceFromJSON(value.json());
         }
-        return this.currentUser != null;
-    }
-    public refreshCurrentUser(): Promise<User> {
-        const url = `http://localhost:3000/users/user/${this.currentUser._id}`;
-        return this.http.get(url).toPromise().then((user) => {
-            if (user.json() != null) {
-                this.currentUser = user.json() as User;
-            }
-            return this.currentUser;
-        });
 
+        return currentUser != null;
+    }
+
+    public refreshCurrentUser(): Promise<User> {
+        const url = `http://localhost:3000/users/user/${currentUser._id}`;
+        return this.http.get(url) .toPromise().then((user) => {
+            if (user.json() != null) {
+                currentUser = User.createInstanceFromJSON(user.json());
+            }
+
+            return currentUser;
+        });
     }
 
 }
+
+
 

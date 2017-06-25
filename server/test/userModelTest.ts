@@ -87,6 +87,8 @@ class UserModelTest extends baseModelTest{
         user._id.should.exist;
         user.movies.length.should.equal(1);
         user.movies[0].title.should.equal(movie1.title);
+
+        await chai.request(server.expressApp).post(url).send({_id : movie1._id}).then();
     }
 
     @test('Create a new User')

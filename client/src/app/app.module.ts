@@ -25,6 +25,10 @@ import {DropdownModule} from 'primeng/primeng';
 import {GrowlModule} from 'primeng/primeng';
 import {TabMenuModule} from 'primeng/primeng';
 import {MenuComponent} from "./menu/menu.component";
+import {FieldsetModule} from 'primeng/primeng';
+import {DataTableModule,SharedModule} from 'primeng/primeng';
+import {ChartModule} from 'primeng/primeng';
+import { MovieRateStatComponent } from './movie-rate-stat/movie-rate-stat.component';
 
 
 @NgModule({
@@ -35,7 +39,8 @@ import {MenuComponent} from "./menu/menu.component";
         MovieAddComponent,
         MovieSearchComponent,
         UserProfileComponent,
-        MenuComponent
+        MenuComponent,
+        MovieRateStatComponent
     ],
     imports: [
         BrowserModule,
@@ -52,7 +57,10 @@ import {MenuComponent} from "./menu/menu.component";
         DropdownModule,
         GrowlModule,
         TabMenuModule,
-        ConfirmDialogModule
+        ConfirmDialogModule,
+        FieldsetModule,
+        DataTableModule,
+        ChartModule
     ],
     providers: [
         UserService,

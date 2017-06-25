@@ -4,6 +4,15 @@
 
 <p-growl [(value)]="msgs"></p-growl>
 <p-confirmDialog width="425"></p-confirmDialog>
+
+<div class="ui-grid ui-grid-responsive ui-fluid"
+     style="font-size:16px;padding:20px;border-bottom:1px solid #D5D5D5;">
+    <div class="ui-grid-row">
+        <div class="ui-grid-col-4">
+            <p-chart type="pie" [data]="myGlobalMovieStat"></p-chart>
+        </div>
+    </div>
+</div>
 <p-dataList [value]="movies" [paginator]="true" [rows]="5">
     <p-header>
         My movies's Collection
@@ -12,28 +21,53 @@
         <div class="ui-grid ui-grid-responsive ui-fluid"
              style="font-size:16px;padding:20px;border-bottom:1px solid #D5D5D5;">
             <div class="ui-grid-row">
-                <div class="ui-grid-col-3" style="text-align:center">
-                    <img height="128" width="128" src="{{movie.image}}">
-                </div>
-                <div class="ui-grid-col-5">
+                <div class="ui-grid-col-10">
                     <div class="ui-grid ui-grid-responsive ui-fluid">
                         <div class="ui-grid-row">
-                            <div class="ui-grid-col-4"><strong>Name:</strong></div>
-                            <div>{{movie.title}} - {{movie.year}}</div>
-                        </div>
-                        <div class="ui-grid-row">
-                            <div class="ui-grid-col-4"><strong>My rating:</strong></div>
-                            <div >
-                                <p-spinner size="5" [(ngModel)]="movie.rating" [min]="1" [max]="5" #searchBox
-                                           id="search-box"
-                                           (keyup)="updateMovieRating(movie,searchBox.value)"></p-spinner>
+                            <div class="ui-grid-col-6">
+                                <H3>{{movie.title}} - {{movie.year}}</H3>
                             </div>
+                            <div class="ui-grid-col-6">
+                                <H3>My Rating : {{movie.userRate}}</H3>
+                            </div>
+                        </div>
+                        <div class="ui-grid-row"  style="margin-top:20px;">
+
+                            <div class="ui-grid-col-8">
+
+                                <p-fieldset legend="Global Rating : {{movie.globalRating}} " [toggleable]="true" [collapsed]="true">
+                                    <movie-rate-stat [movie]="movie"></movie-rate-stat>
+                                </p-fieldset>
+
+                            </div>
+
+                            <div class="ui-grid-col-4">
+
+                                <p-fieldset legend="Actors" [toggleable]="true" [collapsed]="true">
+
+                                    <ul>
+                                        <li *ngFor="let actor of movie.actors">
+                                            <span>{{actor}}</span>
+                                        </li>
+                                    </ul>
+
+                                </p-fieldset>
+
+                            </div>
+
+                            <!--<div class="ui-grid-col-4"><strong>My rating:</strong></div>-->
+                            <!--<div >-->
+
+                                <!--&lt;!&ndash;<p-spinner size="5" [(ngModel)]="movie.getUserRate('a')" [min]="1" [max]="5" #searchBox&ndash;&gt;-->
+                                           <!--&lt;!&ndash;id="search-box"&ndash;&gt;-->
+                                           <!--&lt;!&ndash;(keyup)="updateMovieRating(movie,searchBox.value)"></p-spinner>&ndash;&gt;-->
+                            <!--</div>-->
                         </div>
                     </div>
                 </div>
-                <div class="ui-grid-col-2" style="text-align:left">
-                    <button type="button" (click)="removeMovieFromCollection(movie)" pButton icon="fa-trash" label="Delete"></button>
-                </div>
+                <!--<div class="ui-grid-col-2" style="text-align:left">-->
+                    <!--<button type="button" (click)="removeMovieFromCollection(movie)" pButton icon="fa-trash" label="Delete"></button>-->
+                <!--</div>-->
             </div>
 
         </div>

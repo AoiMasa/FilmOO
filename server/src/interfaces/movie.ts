@@ -9,7 +9,6 @@ export  interface IMovieRate{
 export interface IMovie{
     title?: string;
     year?: number;
-    image? : string;
     actors?: Array<string>;
     rates?: Array<IMovieRate>;
 }

@@ -5,6 +5,8 @@ import {Observable} from "rxjs/Observable";
 import {Movie} from "./movie";
 import {isNullOrUndefined} from "util";
 import {IMovie} from "../../../../server/src/interfaces/movie";
+import {UserService,currentUser} from '../user/user.service';
+
 
 const ACTORS: string[] = [
     "Chris Pratt",
@@ -22,7 +24,7 @@ const ACTORS: string[] = [
 @Injectable()
 export class MovieService {
 
-    constructor(private http: Http) {
+    constructor(private http: Http, private userService: UserService) {
     }
 
     /*search(term: string): Observable<Movie[]> {
@@ -51,9 +53,15 @@ export class MovieService {
         return this.http.get(url).toPromise().then(this.convertMovies);
     }
 
-    private convertMovies = (response : Response) :  IMovie[] | PromiseLike<IMovie[]> => {
+    private convertMovies = (response : Response) :  Movie[] | PromiseLike<Movie[]> => {
         if (response != null && response.json() != null){
-            let movies : IMovie[] =  response.json() as IMovie[];
+            const movies: Movie[] = new Array<Movie>(); //=  response.json() as IMovie[];
+            const values: IMovie[] = response.json() as IMovie[];
+
+            for(let movie of values){
+                movies.push(Movie.createInstanceFromJSON(movie));
+            }
+
             return movies;
         }else{
             return null;
