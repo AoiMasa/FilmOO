@@ -7,6 +7,7 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 //Angular Material
 import {MaterialModule} from '@angular/material';
 import {UserService} from "./user/user.service";
+import {AuthGard} from "./app-routing/auth.gard";
 
 //PrimeFace
 import {ButtonModule, ConfirmationService, ConfirmDialogModule, PanelModule} from 'primeng/primeng';
@@ -63,6 +64,7 @@ import { MovieRateStatComponent } from './movie-rate-stat/movie-rate-stat.compon
         ChartModule
     ],
     providers: [
+        AuthGard,
         UserService,
         MovieService,
         ConfirmationService

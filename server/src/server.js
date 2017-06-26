@@ -55,14 +55,3 @@ exports.HttpServer = HttpServer;
 //Create and start the server
 exports.server = new HttpServer();
 exports.server.start();
-/*
-let imdb = require('imdb');
-
-imdb('tt3659388', (err : any, data : any) => {
-    if (err)
-        console.log(err.stack);
-
-    if (data)
-        console.log(data);
-});
-*/

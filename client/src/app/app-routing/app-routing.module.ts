@@ -6,6 +6,7 @@ import {RegisterComponent} from "../register/register.component";
 import {UserProfileComponent} from "../user-profile/user-profile.component";
 import {MovieAddComponent} from "../movie-add/movie-add.component";
 import {LoginComponent} from "../login/login.component";
+import {AuthGard} from "./auth.gard";
 
 const routes: Routes = [
   {
@@ -23,11 +24,13 @@ const routes: Routes = [
   },
   {
     path: 'user-profile',
-    component: UserProfileComponent
+    component: UserProfileComponent,
+      canActivate : [AuthGard]
   },
   {
     path: 'movie-add',
-    component: MovieAddComponent
+    component: MovieAddComponent,
+      canActivate : [AuthGard]
   }
 ];
 

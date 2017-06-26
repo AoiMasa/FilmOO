@@ -29,6 +29,8 @@ export let currentUser: User;
 export class UserService {
 
     constructor(private http: Http) {
+
+
     }
 
     addMovieToCollection(movie: Movie): Promise<Response> {
@@ -114,6 +116,9 @@ export class UserService {
 
         if (value.json() != null) {
             currentUser = User.createInstanceFromJSON(value.json());
+
+            sessionStorage.setItem("currentUserName",currentUser.userName);
+            sessionStorage.setItem("currentPassword",currentUser.password);
         }
 
         return currentUser != null;
@@ -128,6 +133,10 @@ export class UserService {
 
             return currentUser;
         });
+    }
+
+    public clearCurrentUser(){
+        currentUser = null;
     }
 
 }

@@ -1,4 +1,5 @@
 import {Component, OnInit} from '@angular/core';
+import {Router} from '@angular/router';
 import {UserService} from "./user/user.service";
 
 @Component({
@@ -9,5 +10,15 @@ import {UserService} from "./user/user.service";
 })
 export class AppComponent {
 
+    constructor(private userService : UserService,
+                private router: Router){
+    }
+
+    logOut() {
+        alert("CACA");
+        sessionStorage.clear();
+        this.userService.clearCurrentUser();
+        this.router.navigateByUrl('/login');
+    }
 
 }
