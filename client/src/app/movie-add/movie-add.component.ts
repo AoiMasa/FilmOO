@@ -9,11 +9,9 @@ import {UserService} from "../user/user.service";
 })
 export class MovieAddComponent implements OnInit {
 
-    constructor(private userService: UserService) {
-    }
+    constructor(private userService: UserService) {}
 
-    ngOnInit() {
-    }
+    ngOnInit() {}
 
     addMovie(movie: Movie): void {
         if (this.userService.addMovieToCollection(movie)) alert(movie.title + " was added to your collection !");

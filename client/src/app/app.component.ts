@@ -15,7 +15,6 @@ export class AppComponent {
     }
 
     logOut() {
-        alert("CACA");
         sessionStorage.clear();
         this.userService.clearCurrentUser();
         this.router.navigateByUrl('/login');

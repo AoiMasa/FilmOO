@@ -3,6 +3,7 @@ import {Router} from "@angular/router";
 import {UserService,currentUser} from "../user/user.service";
 import {Movie} from "../movie/movie";
 import {ConfirmationService, Message} from "primeng/primeng";
+import {MovieService} from '../movie/movie.service';
 
 @Component({
     selector: 'app-user-profile',
@@ -12,13 +13,16 @@ import {ConfirmationService, Message} from "primeng/primeng";
 export class UserProfileComponent implements OnInit {
 
     myGlobalMovieStat : any;
+    actorsStats : any;
 
     username: string;
     movies: Movie[];
     msgs: Message[];
     currentUserId: string;
 
-    constructor(private userService: UserService,private confirmationService: ConfirmationService) {
+    constructor(private userService: UserService,
+                private movieService : MovieService,
+                private confirmationService: ConfirmationService) {
         this.msgs = [];
 
     }
@@ -29,9 +33,10 @@ export class UserProfileComponent implements OnInit {
                 this.movies = user.movies;
                 this.currentUserId = currentUser._id;
                 this.setMovieStat();
+                this.getActorsStats();
             });
         }
-        else this.username = "Default";
+
     }
 
     updateMovieRating(movie: Movie, newRating: number) {
@@ -65,8 +70,21 @@ export class UserProfileComponent implements OnInit {
                     ]
                 }
             ]};
+    }
 
-
+    private getActorsStats(){
+        this.movieService.getActorsStats(this.currentUserId).then(x => {
+            this.actorsStats = {
+                labels : x.filter(y => y.count > 1).map(y => y._id),
+                datasets: [
+                    {
+                        label: 'Count',
+                        backgroundColor: '#42A5F5',
+                        borderColor: '#1E88E5',
+                        data: x.filter(y => y.count > 1).map(y => y.count)
+                    }
+                ]};
+            });
     }
 
     // removeMovieFromCollection(movie: Movie)
@@ -85,9 +103,4 @@ export class UserProfileComponent implements OnInit {
     //         }
     //     })
     // }
-
-
-
-
-
 }

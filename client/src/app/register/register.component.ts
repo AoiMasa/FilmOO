@@ -11,11 +11,9 @@ import {first} from 'rxjs/operator/first';
 export class RegisterComponent implements OnInit {
 
 
-    constructor(private router: Router, private userService: UserService) {
-    }
+    constructor(private router: Router, private userService: UserService) {}
 
-    ngOnInit() {
-    }
+    ngOnInit() {}
 
     private isTextNullOrEmpty(text: string): boolean {
         return text == null || text.trim() == '';
@@ -58,8 +56,6 @@ export class RegisterComponent implements OnInit {
         else if (this.isTextNullOrEmpty(lastname)) {
             alert('Lastname must not be empty !');
         }
-
-
     }
 
 }

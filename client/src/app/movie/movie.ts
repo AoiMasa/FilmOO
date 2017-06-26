@@ -7,7 +7,6 @@ export  class MovieRate implements  IMovieRate {
     lastName: string;
     rating: number;
 
-
     public static createInstanceFromJSON(value: IMovieRate): MovieRate {
         const newMovieRate: MovieRate = new MovieRate();
 
@@ -20,10 +19,6 @@ export  class MovieRate implements  IMovieRate {
     }
 }
 
-
-/**
- * Created by Aoi on 15/06/2017.
- */
 export class Movie implements IMovie {
     public _id: string;
     public title: string;
@@ -83,10 +78,3 @@ export class Movie implements IMovie {
         }
     }
 }
-
-// export class Result
-// {
-//     movie: Movie;
-//     userRating: IMovieRate;
-//     globalRating: number;
-// }

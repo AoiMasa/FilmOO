@@ -53,6 +53,11 @@ export class MovieService {
         return this.http.get(url).toPromise().then(this.convertMovies);
     }
 
+    getActorsStats(userId : string) : Promise<any[]> {
+        const url = `http://localhost:3000/movies/actorStats/${userId}`;
+        return this.http.get(url).toPromise().then((x) => x.json() as Array<any>);
+    }
+
     private convertMovies = (response : Response) :  Movie[] | PromiseLike<Movie[]> => {
         if (response != null && response.json() != null){
             const movies: Movie[] = new Array<Movie>(); //=  response.json() as IMovie[];

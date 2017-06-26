@@ -74,7 +74,7 @@ export class UserRoute extends BaseRoute{
             next();
         })
     }
-
+    
     private addMovie = (req: Request, res: Response) => {
 
         this.db.user.findOne({_id : req.params.userid}).exec().then(x => {

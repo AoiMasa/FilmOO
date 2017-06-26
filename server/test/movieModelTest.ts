@@ -6,6 +6,8 @@ import mongoose = require('mongoose');
 import * as chai from 'chai';
 
 import {HttpServer, server} from '../src/server';
+import {IUser} from '../src/interfaces/user';
+import {UserModelTest} from './userModelTest';
 
 @suite
 export class MovieModelTest extends baseModelTest{
@@ -148,6 +150,36 @@ export class MovieModelTest extends baseModelTest{
         result.body.rates[0].lastName.should.equal(newRate.lastName);
         result.body.rates[0].firstName.should.equal(newRate.firstName);
         result.body.rates[0].rating.should.equal(newRate.rating);
+    }
+
+    @test('From REST - Aggregating actors data')
+    public async getActorStat() {
+
+        let newMovie1: IMovie = {title : 'user2 1', actors : ['111','22 findMe 22']};
+        let newMovie2: IMovie = {title : 'user2 2', actors : ['111','22 findMe 22']};
+        let newMovie3: IMovie = {title : 'user2 3', actors : ['333','111']};
+
+        const movie1 = await (new MovieModelTest.Movie(newMovie1)).save();
+        const movie2 = await (new MovieModelTest.Movie(newMovie2)).save();
+        const movie3 = await (new MovieModelTest.Movie(newMovie3)).save();
+
+        let user : IUser = {};
+        user.userName  = 'user2';
+        user.password  = 'password2';
+        user.firstName = 'firstName2';
+        user.lastName  = 'lastName2';
+        user.movies = [];
+        user.movies.push(movie1._id);
+        user.movies.push(movie2._id);
+        user.movies.push(movie3._id);
+
+        // create user and return promise
+        const savedUser = await (new UserModelTest.User(user)).save();
+
+        const url = `/movies/actorStats/${savedUser._id}`;
+        let result = await chai.request(server.expressApp).get(url).then();
+
+        result.body.length.should.equals(3);
     }
 
     @test('Create a new movie')

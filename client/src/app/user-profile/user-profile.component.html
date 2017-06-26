@@ -9,8 +9,17 @@
      style="font-size:16px;padding:20px;border-bottom:1px solid #D5D5D5;">
     <div class="ui-grid-row">
         <div class="ui-grid-col-4">
-            <p-chart type="pie" [data]="myGlobalMovieStat"></p-chart>
+            <!--<div class="chart-container" style="position: relative; height:40vh; width:80vw">-->
+                <p-chart type="pie" [data]="myGlobalMovieStat"></p-chart>
+            <!--</div>-->
         </div>
+
+        <div class="ui-grid-col-6">
+            <!--<div class="chart-container" style="position: relative; height:40vh; width:80vw">-->
+                <p-chart type="bar" [data]="actorsStats"></p-chart>
+            <!--</div>-->
+        </div>
+
     </div>
 </div>
 <p-dataList [value]="movies" [paginator]="true" [rows]="5">
@@ -21,7 +30,7 @@
         <div class="ui-grid ui-grid-responsive ui-fluid"
              style="font-size:16px;padding:20px;border-bottom:1px solid #D5D5D5;">
             <div class="ui-grid-row">
-                <div class="ui-grid-col-10">
+                <div class="ui-grid-col-12">
                     <div class="ui-grid ui-grid-responsive ui-fluid">
                         <div class="ui-grid-row">
                             <div class="ui-grid-col-6">
@@ -30,6 +39,7 @@
                             <div class="ui-grid-col-6">
                                 <H3>My Rating : {{movie.userRate}}</H3>
                             </div>
+
                         </div>
                         <div class="ui-grid-row"  style="margin-top:20px;">
 
@@ -54,6 +64,8 @@
                                 </p-fieldset>
 
                             </div>
+
+
 
                             <!--<div class="ui-grid-col-4"><strong>My rating:</strong></div>-->
                             <!--<div >-->

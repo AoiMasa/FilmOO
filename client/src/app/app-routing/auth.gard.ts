@@ -12,14 +12,11 @@ export class AuthGard implements CanActivate {
     async canActivate() {
 
         if (currentUser == null) {
-
             if (sessionStorage.getItem("currentUserName")) {
-
                 return await this.userService.connect(
                     sessionStorage.getItem("currentUserName"),
                     sessionStorage.getItem("currentPassword")
                 ).then();
-
             }
             this.router.navigate(['/login']);
             return false;

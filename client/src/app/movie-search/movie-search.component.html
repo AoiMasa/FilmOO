@@ -4,13 +4,13 @@
         <tr>
             <td>
                 <input #searchBox id="search-box" /> <!-- (keyup)="search(searchBox.value)" -->
-                <div>
-                    <!-- async pipe subscribes to the Observable and produces array of heroes to *ngFor -->
-                    <!--<div *ngFor="let movie of movies | async"
-                         (click)="addMovieToResult(movie)" class="search-result">
-                        {{movie.title}}
-                    </div>-->
-                </div>
+                <!--<div>-->
+                    <!--&lt;!&ndash; async pipe subscribes to the Observable and produces array of heroes to *ngFor &ndash;&gt;-->
+                    <!--&lt;!&ndash;<div *ngFor="let movie of movies | async"-->
+                         <!--(click)="addMovieToResult(movie)" class="search-result">-->
+                        <!--{{movie.title}}-->
+                    <!--</div>&ndash;&gt;-->
+                <!--</div>-->
             </td>
             <td>
                 <button md-raised-button (click)="addMoviesToResult(searchBox.value)">GO</button>

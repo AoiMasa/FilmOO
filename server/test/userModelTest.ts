@@ -12,7 +12,7 @@ import {IMovie} from '../src/interfaces/movie';
 import {MovieModelTest} from './movieModelTest';
 
 @suite
-class UserModelTest extends baseModelTest{
+export class UserModelTest extends baseModelTest{
 
     // store test data
     private data: IUser;

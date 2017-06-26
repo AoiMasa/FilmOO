@@ -11,28 +11,18 @@ import {User} from "../user/user";
 })
 export class LoginComponent implements OnInit {
 
-    constructor(private router: Router, private userService: UserService) {
-    }
+    constructor(private router: Router, private userService: UserService) {}
 
-    ngOnInit() {
-
-    }
+    ngOnInit() {}
 
     private  login(username: string, password: string) {
-
-        //SERVER VERSION
-         this.userService.connect(username, password).then(isSuccessed => {
-        if(isSuccessed) {
-            this.router.navigate(['/user-profile']);
-        }else{
-            alert("Unknown username and/or password !");
-        }
+        this.userService.connect(username, password).then(isSuccessed => {
+            if (isSuccessed) {
+                this.router.navigate(['/user-profile']);
+            } else {
+                alert('Unknown username and/or password !');
+            }
         });
-
-        //MOCK VERSION
-        /*let isSuccessed: boolean = this.userService.authenticate(username, password);
-        if (isSuccessed) this.router.navigate(['/user-profile']);
-        else alert("Unknown username and/or password !");*/
     }
 
     private  register() {

@@ -13,10 +13,6 @@ export class User implements IUser{
     public lastName : string;
     public movies: Movie[];
 
-    // constructor ( public _id: string, public userName: string, public password: string, public firstName: string, public lastName: string) {
-    //
-    // }
-
     public static createInstanceFromJSON(value: IUser): User {
         const newUser: User = new User();
 

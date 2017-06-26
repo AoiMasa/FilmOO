@@ -13,15 +13,11 @@ export class MovieRateStatComponent implements OnInit {
     ratingForChart : any;
     optionsForChart : any;
 
-    constructor() {
-
-    }
+    constructor() {}
 
     ngOnInit() {
-
         this.setRatingForChart();
     }
-
 
     public setRatingForChart(){
         this.ratingForChart = {
@@ -49,7 +45,6 @@ export class MovieRateStatComponent implements OnInit {
                 }]
             }
         };
-
     }
 
 }

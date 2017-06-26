@@ -15,7 +15,6 @@ import 'rxjs/add/operator/debounceTime';
 import 'rxjs/add/operator/distinctUntilChanged';
 import {UserService, currentUser } from "../user/user.service";
 import {Message, SelectItem} from "primeng/primeng";
-import {isNullOrUndefined} from "util";
 import {IMovieRate} from "../../../../server/src/interfaces/movie";
 
 
@@ -29,18 +28,14 @@ import {IMovieRate} from "../../../../server/src/interfaces/movie";
 
 export class MovieSearchComponent implements OnInit {
     movies: Movie[];
-    //result: Result[];
     filters: SelectItem[];
     selectedFilter: string;
     msgs: Message[];
 
-
     private  searchTerms = new Subject<string>();
-
 
     constructor(private userService: UserService,
                 private movieService: MovieService) {
-        //this.result = [];
         this.filters = [];
         this.msgs = [];
         this.filters.push({label: 'Movies', value: 'Movies'});
@@ -76,27 +71,7 @@ export class MovieSearchComponent implements OnInit {
 
         if (userRates.length > 0 ) return userRates[0];
         else return {userId:"-1", firstName: "Default", lastName: "Default", rating: 0};
-
-
     }
-    //
-    // private searchGlobalRating(movie:Movie): number
-    // {
-    //     let globalRate: number = 0;
-    //
-    //     for (var _i = 0; _i < movie.rates.length; _i++) {
-    //         let m: IMovieRate = movie.rates[_i] as IMovieRate;
-    //         globalRate = globalRate + m.rating;
-    //     }
-    //     if ( movie.rates.length > 0 ) return globalRate / movie.rates.length;
-    //     else return 0;
-    // }
-
-
-    // addMovieToResult(movie: Movie): void {
-    //     this.result = []; //Clear old results
-    //     this.result.push({movie: movie, userRating: this.searchUserRating(movie),globalRating:this.searchGlobalRating(movie)});
-    // }
 
     addMoviesToResult(term: string): void {
         //this.result = []; //Clear old results
@@ -118,12 +93,6 @@ export class MovieSearchComponent implements OnInit {
 
     private displayMovies = (movies: Movie[]) => {
         if (movies != null) {
-            // let newRes : Result[] = [];
-            // for (var _i = 0; _i < movies.length; _i++) {
-            //     let m: Movie = movies[_i] as Movie;
-            //     newRes.push({movie:m, userRating:this.searchUserRating(m),globalRating:this.searchGlobalRating(m)});
-            // }
-            // this.result = newRes;
             this.movies = movies;
         }
     }
@@ -141,9 +110,6 @@ export class MovieSearchComponent implements OnInit {
         this.msgs = [];
         this.userService.updateMovieRating(movie, newRating)
             .then(m => {
-                //this.result.find(mo => mo.movie == m).globalRating = this.searchGlobalRating(m);
-
-                //this.movies.find(mo => mo == m
                 this.msgs.push({severity:'success', summary:'Success Message', detail:movie.title + " was rated " + newRating +"/5 !"
                 });
             })
