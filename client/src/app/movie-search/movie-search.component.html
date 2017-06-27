@@ -1,19 +1,11 @@
 <div id="search-component">
     <table>
-
         <tr>
             <td>
-                <input #searchBox id="search-box" /> <!-- (keyup)="search(searchBox.value)" -->
-                <!--<div>-->
-                    <!--&lt;!&ndash; async pipe subscribes to the Observable and produces array of heroes to *ngFor &ndash;&gt;-->
-                    <!--&lt;!&ndash;<div *ngFor="let movie of movies | async"-->
-                         <!--(click)="addMovieToResult(movie)" class="search-result">-->
-                        <!--{{movie.title}}-->
-                    <!--</div>&ndash;&gt;-->
-                <!--</div>-->
+                <input #searchBox id="search-box" />
             </td>
             <td>
-                <button md-raised-button (click)="addMoviesToResult(searchBox.value)">GO</button>
+                <button md-raised-button (click)="getMovies(searchBox.value)">GO</button>
             </td>
             <td>
                 <p-dropdown [options]="filters" [(ngModel)]="selectedFilter"></p-dropdown>
@@ -23,10 +15,7 @@
 </div>
 
 <div id="search-result">
-
-
     <p-growl [(value)]="msgs"></p-growl>
-
     <p-dataList [value]="movies" [paginator]="true" [rows]="5">
         <p-header>
             List of Movie
@@ -35,11 +24,7 @@
             <div class="ui-grid ui-grid-responsive ui-fluid"
                  style="font-size:16px;padding:20px;border-bottom:1px solid #D5D5D5;">
                 <div class="ui-grid-row">
-                    <!--<div class="ui-grid-col-2">-->
-                        <!--<img height="128" width="128" src="{{movie.image}}">-->
-                    <!--</div>-->
-
-                    <div class="ui-grid-col-5">
+                    <div class="ui-grid-col-7">
                         <div class="ui-grid ui-grid-responsive ui-fluid">
                             <div class="ui-grid-row">
                                 <div class="ui-grid-col-4"><strong>Name</strong></div>
@@ -59,8 +44,14 @@
                             </div>
                         </div>
                     </div>
-                    <div class="ui-grid-col-1" style="text-align:left"><i class="fa fa-plus" (click)="addMovie(m.movie)"
-                                                                          style="cursor:pointer;float:left;margin-top:10px"></i>
+                    <div class="ui-grid-col-5" style="text-align:left">
+                        <p-fieldset legend="Actors" [toggleable]="true" [collapsed]="true">
+                            <ul>
+                                <li *ngFor="let actor of m.actors">
+                                    <span>{{actor}}</span>
+                                </li>
+                            </ul>
+                        </p-fieldset>
                     </div>
                 </div>
             </div>

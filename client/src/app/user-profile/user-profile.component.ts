@@ -1,8 +1,7 @@
 import {Component, OnInit} from '@angular/core';
-import {Router} from "@angular/router";
 import {UserService,currentUser} from "../user/user.service";
 import {Movie} from "../movie/movie";
-import {ConfirmationService, Message} from "primeng/primeng";
+import { Message} from "primeng/primeng";
 import {MovieService} from '../movie/movie.service';
 
 @Component({
@@ -12,20 +11,20 @@ import {MovieService} from '../movie/movie.service';
 })
 export class UserProfileComponent implements OnInit {
 
-    myGlobalMovieStat : any;
-    actorsStats : any;
-
+    myGlobalMovieStat: any;
+    optionsMyGlobalMovieStat: any;
+    actorsStats: any;
+    optionsActorsStats: any;
     username: string;
     movies: Movie[];
     msgs: Message[];
     currentUserId: string;
 
     constructor(private userService: UserService,
-                private movieService : MovieService,
-                private confirmationService: ConfirmationService) {
+                private movieService : MovieService) {
         this.msgs = [];
-
     }
+
     ngOnInit() {
         if (currentUser != null) {
             this.userService.refreshCurrentUser().then((user) => {
@@ -70,6 +69,11 @@ export class UserProfileComponent implements OnInit {
                     ]
                 }
             ]};
+
+        this.optionsMyGlobalMovieStat = {
+            responsive:false,
+            maintainAspectRatio: false
+        };
     }
 
     private getActorsStats(){
@@ -84,23 +88,22 @@ export class UserProfileComponent implements OnInit {
                         data: x.filter(y => y.count > 1).map(y => y.count)
                     }
                 ]};
-            });
+
+            this.optionsActorsStats = {
+                responsive:false,
+                maintainAspectRatio: false,
+                scales: {
+                    yAxes: [{
+                        display: true,
+                        ticks: {
+                            beginAtZero: true,
+                            stepValue: 1,
+                            min: 0,
+                        }
+                    }]
+                }
+            };
+        });
     }
 
-    // removeMovieFromCollection(movie: Movie)
-    // {
-    //   this.msgs = [];
-    //     this.confirmationService.confirm({
-    //         message: 'Do you want to remove this movie from your collection ?',
-    //         header: 'Remove Confirmation',
-    //         icon: 'fa fa-trash',
-    //         accept: () => {
-    //
-    //             if (this.userService.removeMovieFromCollection(movie)) this.msgs.push({severity:'success', summary:'Success Message', detail:movie.title + " was removed from your collection."});
-    //             else this.msgs.push({severity:'error', summary:'Error Message', detail:movie.title+ " could not be removed. Contact the administrator."});
-    //         },
-    //         reject: () => {
-    //         }
-    //     })
-    // }
 }

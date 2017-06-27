@@ -18,6 +18,7 @@ import {TabMenuModule} from 'primeng/primeng';
 import {FieldsetModule} from 'primeng/primeng';
 import {DataTableModule,SharedModule} from 'primeng/primeng';
 import {ChartModule} from 'primeng/primeng';
+import {AccordionModule} from 'primeng/primeng';
 
 //Application
 import {AppComponent} from './app.component';
@@ -63,7 +64,8 @@ import { MovieRateStatComponent } from './movie-rate-stat/movie-rate-stat.compon
         ConfirmDialogModule,
         FieldsetModule,
         DataTableModule,
-        ChartModule
+        ChartModule,
+        AccordionModule
     ],
     providers: [
         AuthGard,

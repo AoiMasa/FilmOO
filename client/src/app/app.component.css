@@ -2,6 +2,11 @@
     flex: 1 1 auto;
 }
 
+.title {
+    padding-left: 50px;
+}
+
 .icon {
     padding: 0 14px;
 }
+

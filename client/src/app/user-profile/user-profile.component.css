@@ -2,7 +2,26 @@
 p{
   text-align: right;
 }
+
 table{
   table-layout:fixed;
   width:100%;
 }
+
+.upperPart{
+    margin-bottom: 50px;
+    margin-top: 50px;
+}
+
+.chart-container{
+    display: block;
+}
+
+.myGlobalMovieStat{
+    height: 300px !important;
+}
+
+.actorsStats{
+    height: 300px !important;
+}
+

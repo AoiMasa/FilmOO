@@ -40,9 +40,6 @@ export class RegisterComponent implements OnInit {
                     });
                 })
                 .catch(() => {alert('Username already exists.'); });
-
-
-
         }
         else if (this.isTextNullOrEmpty(username)) {
             alert('Username must not be empty !');

@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {Router} from '@angular/router';
-import {UserService} from "./user/user.service";
+import {UserService, currentUser} from "./user/user.service";
 
 @Component({
   selector: 'app-root',
@@ -12,6 +12,14 @@ export class AppComponent {
 
     constructor(private userService : UserService,
                 private router: Router){
+    }
+
+    public get title(){
+        if(currentUser != null){
+            return " -> " + currentUser.firstName + " " + currentUser.lastName;
+        }else{
+            return "";
+        }
     }
 
     logOut() {

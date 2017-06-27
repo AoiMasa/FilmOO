@@ -32,6 +32,8 @@ export class MovieRateStatComponent implements OnInit {
             ]};
 
         this.optionsForChart = {
+            // responsive:false,
+            maintainAspectRatio: false,
             scales: {
                 yAxes: [{
                     display: true,

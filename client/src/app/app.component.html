@@ -1,13 +1,15 @@
 <md-toolbar>
     <span>FilmOO</span>
+    <span class="title">{{title}}</span>
     <span class="spacer"></span>
     <md-icon class="icon">
-        <a  href="#" (click)="logOut()" > <!-- routerLink="/login" routerLinkActive="active"  -->
+        <a  href="#" (click)="logOut()" >
             <i class="material-icons" >power_settings_new</i>
         </a>
     </md-icon>
 
 </md-toolbar>
+
 
 <router-outlet></router-outlet>
 
