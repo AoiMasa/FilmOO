@@ -33,7 +33,7 @@ gulp.task('Client-DEBUG', (done) => {
 
 gulp.task('Build-Server-PROD', () => {
     //Push config
-    gulp.src(["./server/config/dev§.json"]).pipe(gulp.dest('./dist/config'));
+    gulp.src(["./server/config/dev.json"]).pipe(gulp.dest('./dist/config'));
     gulp.src(["./server/config/default.json"]).pipe(gulp.dest('./dist/config'));
     //Build server and copy it to dist folder
     return serverTsProject.src()
